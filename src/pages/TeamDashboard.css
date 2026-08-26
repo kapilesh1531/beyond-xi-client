@@ -1,0 +1,759 @@
+.team-dashboard {
+  width: 100%;
+  min-height: 100vh;
+  padding: 32px 34px 60px;
+  box-sizing: border-box;
+}
+
+.team-loading {
+  min-height: 70vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #84918a;
+  font-size: 18px;
+}
+
+/* =========================================================
+   HEADER
+========================================================= */
+
+.team-dashboard-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 24px;
+  margin-bottom: 28px;
+}
+
+.team-identity {
+  display: flex;
+  align-items: center;
+  gap: 18px;
+}
+
+.team-logo {
+  width: 78px;
+  height: 78px;
+  border-radius: 18px;
+  border: 1px solid #26372e;
+  background: #0c1511;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  flex-shrink: 0;
+}
+
+.team-logo img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  padding: 10px;
+  box-sizing: border-box;
+}
+
+.team-logo span {
+  font-size: 22px;
+  font-weight: 800;
+  color: #dfe8e2;
+}
+
+.team-label,
+.team-section-label {
+  margin: 0 0 7px;
+  font-size: 11px;
+  line-height: 1;
+  letter-spacing: 2.2px;
+  font-weight: 800;
+  color: #718078;
+}
+
+.team-identity h1 {
+  margin: 0;
+  font-size: clamp(34px, 4vw, 54px);
+  line-height: 0.98;
+  letter-spacing: -1.8px;
+  color: #f1f5f2;
+}
+
+.team-username {
+  display: inline-block;
+  margin-top: 8px;
+  color: #6f7d75;
+  font-size: 14px;
+}
+
+.team-header-actions {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+
+.team-purse-card {
+  min-width: 235px;
+  padding: 17px 20px;
+  border: 1px solid #284034;
+  border-radius: 16px;
+  background: #0b1510;
+  box-sizing: border-box;
+}
+
+.team-purse-card span,
+.team-squad-finance span {
+  display: block;
+  margin-bottom: 7px;
+  color: #718078;
+  font-size: 10px;
+  font-weight: 800;
+  letter-spacing: 1.6px;
+}
+
+.team-purse-card strong {
+  display: block;
+  color: #5de67e;
+  font-size: 26px;
+  line-height: 1.1;
+}
+
+.team-logout-button {
+  min-width: 100px;
+  height: 48px;
+  border-radius: 12px;
+  border: 1px solid #54302c;
+  background: #0a0e0b;
+  color: #e87263;
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: 1px;
+  cursor: pointer;
+  transition: 0.2s ease;
+}
+
+.team-logout-button:hover {
+  background: #24120f;
+}
+
+/* =========================================================
+   ERROR
+========================================================= */
+
+.team-error {
+  margin-bottom: 18px;
+  padding: 14px 16px;
+  border: 1px solid #6d3432;
+  border-radius: 12px;
+  background: #21100f;
+  color: #ff8677;
+  font-size: 14px;
+}
+
+/* =========================================================
+   AUCTION STATUS
+========================================================= */
+
+.team-auction-status {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 20px;
+  padding: 23px 24px;
+  margin-bottom: 22px;
+  border: 1px solid #1f3227;
+  border-radius: 16px;
+  background: #09110d;
+}
+
+.team-auction-status h2 {
+  margin: 0;
+  color: #eef4ef;
+  font-size: 27px;
+}
+
+.team-auction-description {
+  margin: 8px 0 0;
+  color: #6f7d75;
+  font-size: 13px;
+}
+
+.team-auction-badge {
+  padding: 11px 17px;
+  border: 1px solid #245f38;
+  border-radius: 999px;
+  background: #0d2316;
+  color: #5ce37c;
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: 1px;
+}
+
+.team-auction-badge.paused {
+  border-color: #6b5c27;
+  background: #221e0c;
+  color: #d6c85b;
+}
+
+.team-auction-badge.completed {
+  border-color: #36516b;
+  background: #101c26;
+  color: #91c5ee;
+}
+
+/* =========================================================
+   CURRENT PLAYER
+========================================================= */
+
+.team-current-player-section {
+  margin-bottom: 26px;
+  padding: 24px;
+  border: 1px solid #1f3227;
+  border-radius: 18px;
+  background: #09110d;
+}
+
+.team-current-player-card {
+  display: flex;
+  gap: 24px;
+  align-items: stretch;
+  margin-top: 16px;
+}
+
+.team-current-player-image {
+  width: 210px;
+  height: 210px;
+  border-radius: 16px;
+  overflow: hidden;
+  background: #151d19;
+  border: 1px solid #27362e;
+  flex-shrink: 0;
+}
+
+.team-current-player-image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.team-no-image {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #7d8881;
+  font-size: 13px;
+  font-weight: 700;
+}
+
+.team-current-player-info {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.team-current-player-info h2 {
+  margin: 0;
+  color: #f3f7f4;
+  font-size: 37px;
+  letter-spacing: -1px;
+}
+
+.team-player-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-top: 13px;
+}
+
+.team-player-tags span {
+  padding: 8px 11px;
+  border: 1px solid #24362c;
+  border-radius: 999px;
+  background: #0c1510;
+  color: #a4afa8;
+  font-size: 11px;
+  font-weight: 700;
+}
+
+.team-current-player-price {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 14px;
+  margin-top: 22px;
+}
+
+.team-current-player-price > div {
+  padding: 15px 17px;
+  border: 1px solid #24362c;
+  border-radius: 12px;
+  background: #0c1510;
+}
+
+.team-current-player-price span {
+  display: block;
+  margin-bottom: 8px;
+  color: #6d7972;
+  font-size: 10px;
+  font-weight: 800;
+  letter-spacing: 1.5px;
+}
+
+.team-current-player-price strong {
+  color: #5be77d;
+  font-size: 20px;
+}
+
+/* =========================================================
+   SQUAD
+========================================================= */
+
+.team-squad-section {
+  margin-top: 24px;
+  padding: 26px;
+  border: 1px solid #1f3227;
+  border-radius: 20px;
+  background: #09110d;
+  box-shadow: 0 18px 40px rgba(0, 0, 0, 0.12);
+}
+
+.team-squad-header {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 24px;
+}
+
+.team-squad-header h2 {
+  margin: 0;
+  color: #f4f7f5;
+  font-size: 34px;
+  letter-spacing: -1px;
+}
+
+.team-squad-header h2 span {
+  color: #68756d;
+  font-size: 19px;
+  font-weight: 500;
+}
+
+.team-squad-subtitle {
+  margin: 6px 0 0;
+  color: #69766e;
+  font-size: 13px;
+}
+
+.team-squad-finance {
+  display: flex;
+  gap: 12px;
+}
+
+.team-squad-finance > div {
+  min-width: 170px;
+  padding: 14px 16px;
+  border: 1px solid #23352b;
+  border-radius: 13px;
+  background: #0c1510;
+}
+
+.team-squad-finance strong {
+  display: block;
+  color: #5de67e;
+  font-size: 18px;
+}
+
+/* =========================================================
+   POSITION SUMMARY
+========================================================= */
+
+.team-position-summary {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 12px;
+  margin-top: 22px;
+  margin-bottom: 22px;
+}
+
+.position-summary-card {
+  padding: 16px;
+  border: 1px solid #24362c;
+  border-radius: 14px;
+  background: #0b1510;
+  text-align: center;
+  transition: transform 0.2s ease,
+    border-color 0.2s ease;
+}
+
+.position-summary-card:hover {
+  transform: translateY(-2px);
+  border-color: #31543e;
+}
+
+.position-summary-card span {
+  display: block;
+  margin-bottom: 6px;
+  color: #75827a;
+  font-size: 10px;
+  font-weight: 800;
+  letter-spacing: 1.7px;
+}
+
+.position-summary-card strong {
+  display: block;
+  color: #f1f5f2;
+  font-size: 27px;
+}
+
+.position-summary-card small {
+  display: block;
+  margin-top: 4px;
+  color: #58665d;
+  font-size: 10px;
+}
+
+/* =========================================================
+   SQUAD GRID
+========================================================= */
+
+.team-squad-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 15px;
+}
+
+.team-squad-player-card {
+  display: flex;
+  min-height: 145px;
+  overflow: hidden;
+  border: 1px solid #22342a;
+  border-radius: 16px;
+  background:
+    linear-gradient(
+      140deg,
+      #0d1711 0%,
+      #09110d 100%
+    );
+  transition:
+    transform 0.2s ease,
+    border-color 0.2s ease,
+    box-shadow 0.2s ease;
+}
+
+.team-squad-player-card:hover {
+  transform: translateY(-3px);
+  border-color: #356147;
+  box-shadow: 0 14px 30px rgba(0, 0, 0, 0.18);
+}
+
+.team-squad-player-image {
+  width: 118px;
+  min-width: 118px;
+  background: #141d18;
+  border-right: 1px solid #203128;
+  overflow: hidden;
+}
+
+.team-squad-player-image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.squad-placeholder-image {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 31px;
+  background: #111813;
+}
+
+.team-squad-player-content {
+  flex: 1;
+  min-width: 0;
+  padding: 15px;
+}
+
+.team-squad-player-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 8px;
+}
+
+.player-number {
+  color: #4e5d54;
+  font-size: 10px;
+  font-weight: 800;
+  letter-spacing: 1.5px;
+}
+
+.player-position {
+  padding: 5px 8px;
+  border-radius: 999px;
+  background: #102017;
+  color: #78a485;
+  font-size: 9px;
+  font-weight: 800;
+  text-transform: uppercase;
+}
+
+.team-squad-player-content h3 {
+  margin: 14px 0 5px;
+  color: #edf4ef;
+  font-size: 18px;
+  line-height: 1.1;
+}
+
+.team-squad-player-content > p {
+  margin: 0;
+  color: #6c7970;
+  font-size: 11px;
+}
+
+.team-squad-player-footer {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 8px;
+  margin-top: 17px;
+}
+
+.team-squad-player-footer > div {
+  min-width: 0;
+}
+
+.team-squad-player-footer span {
+  display: block;
+  margin-bottom: 4px;
+  color: #56635a;
+  font-size: 8px;
+  font-weight: 800;
+  letter-spacing: 1px;
+}
+
+.team-squad-player-footer strong {
+  display: block;
+  color: #dce5df;
+  font-size: 11px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.team-squad-player-footer > div:last-child strong {
+  color: #5de67e;
+}
+
+/* =========================================================
+   EMPTY SQUAD
+========================================================= */
+
+.empty-team-squad {
+  min-height: 260px;
+  margin-top: 12px;
+  border: 1px dashed #26382d;
+  border-radius: 16px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  background: #0a120d;
+}
+
+.empty-squad-icon {
+  width: 58px;
+  height: 58px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid #263a2e;
+  background: #101914;
+  font-size: 24px;
+  margin-bottom: 14px;
+}
+
+.empty-team-squad h3 {
+  margin: 0;
+  color: #dfe7e1;
+  font-size: 18px;
+}
+
+.empty-team-squad p {
+  margin: 7px 0 0;
+  color: #647169;
+  font-size: 13px;
+}
+
+/* =========================================================
+   SQUAD FOOTER
+========================================================= */
+
+.team-squad-footer {
+  margin-top: 18px;
+  padding: 20px 22px;
+  border: 1px solid #1f3227;
+  border-radius: 16px;
+  background: #09110d;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 30px;
+}
+
+.team-squad-footer h3 {
+  margin: 0;
+  color: #e6eee8;
+  font-size: 21px;
+}
+
+.squad-progress {
+  width: 360px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.squad-progress-track {
+  flex: 1;
+  height: 8px;
+  border-radius: 999px;
+  overflow: hidden;
+  background: #19251e;
+}
+
+.squad-progress-fill {
+  height: 100%;
+  border-radius: inherit;
+  background: #55df78;
+  transition: width 0.3s ease;
+}
+
+.squad-progress > span {
+  min-width: 42px;
+  color: #7e8a82;
+  font-size: 12px;
+  font-weight: 800;
+  text-align: right;
+}
+
+/* =========================================================
+   RESPONSIVE
+========================================================= */
+
+@media (max-width: 1100px) {
+  .team-squad-grid {
+    grid-template-columns: repeat(
+      2,
+      minmax(0, 1fr)
+    );
+  }
+
+  .team-squad-finance {
+    flex-direction: column;
+  }
+}
+
+@media (max-width: 800px) {
+  .team-dashboard {
+    padding: 20px 16px 40px;
+  }
+
+  .team-dashboard-header {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .team-header-actions {
+    justify-content: space-between;
+  }
+
+  .team-purse-card {
+    flex: 1;
+  }
+
+  .team-current-player-card {
+    flex-direction: column;
+  }
+
+  .team-current-player-image {
+    width: 100%;
+    height: 250px;
+  }
+
+  .team-current-player-price {
+    grid-template-columns: 1fr;
+  }
+
+  .team-squad-header {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .team-squad-finance {
+    flex-direction: row;
+  }
+
+  .team-squad-finance > div {
+    flex: 1;
+  }
+
+  .team-squad-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .team-squad-footer {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .squad-progress {
+    width: 100%;
+  }
+}
+
+@media (max-width: 560px) {
+  .team-identity {
+    align-items: flex-start;
+  }
+
+  .team-logo {
+    width: 62px;
+    height: 62px;
+  }
+
+  .team-identity h1 {
+    font-size: 32px;
+  }
+
+  .team-header-actions {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .team-logout-button {
+    width: 100%;
+  }
+
+  .team-squad-finance {
+    flex-direction: column;
+  }
+
+  .team-position-summary {
+    grid-template-columns: repeat(
+      2,
+      minmax(0, 1fr)
+    );
+  }
+
+  .team-squad-player-card {
+    min-height: 125px;
+  }
+
+  .team-squad-player-image {
+    width: 100px;
+    min-width: 100px;
+  }
+}

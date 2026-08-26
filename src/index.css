@@ -1,0 +1,768 @@
+/* =========================================================
+   GLOBAL RESET
+========================================================= */
+
+* {
+  box-sizing: border-box;
+}
+
+html,
+body,
+#root {
+  width: 100%;
+  min-height: 100%;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  background: #050806;
+  color: #eef4ef;
+  font-family:
+    Inter,
+    system-ui,
+    -apple-system,
+    BlinkMacSystemFont,
+    "Segoe UI",
+    sans-serif;
+}
+
+button,
+input,
+select,
+textarea {
+  font: inherit;
+}
+
+button {
+  -webkit-tap-highlight-color: transparent;
+}
+
+img {
+  max-width: 100%;
+}
+
+/* =========================================================
+   TEAM PORTAL
+========================================================= */
+
+.team-portal {
+  width: 100%;
+  min-height: 100vh;
+  background:
+    radial-gradient(
+      circle at 20% 0%,
+      rgba(50, 125, 72, 0.06),
+      transparent 30%
+    ),
+    #050806;
+  color: #eef4ef;
+}
+
+/* =========================================================
+   TEAM NAVIGATION
+========================================================= */
+
+.team-portal-nav {
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+
+  width: 100%;
+  min-height: 76px;
+
+  padding:
+    0
+    34px;
+
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  gap: 30px;
+
+  background:
+    rgba(5, 8, 6, 0.96);
+
+  border-bottom:
+    1px solid
+    #1c2b22;
+
+  backdrop-filter:
+    blur(16px);
+
+  -webkit-backdrop-filter:
+    blur(16px);
+}
+
+/* =========================================================
+   BRAND
+========================================================= */
+
+.team-portal-brand {
+  display: flex;
+  align-items: center;
+  gap: 13px;
+
+  flex-shrink: 0;
+}
+
+.team-portal-brand strong {
+  display: block;
+
+  color: #50e276;
+
+  font-size: 19px;
+  font-weight: 900;
+
+  line-height: 1;
+
+  letter-spacing: 0.5px;
+}
+
+.team-portal-brand span {
+  display: block;
+
+  padding-left: 13px;
+
+  border-left:
+    1px solid
+    #314238;
+
+  color: #68766d;
+
+  font-size: 10px;
+  font-weight: 800;
+
+  line-height: 1;
+
+  letter-spacing: 2px;
+
+  white-space: nowrap;
+}
+
+/* =========================================================
+   NAVIGATION
+========================================================= */
+
+.team-portal-menu {
+  display: flex;
+  align-items: center;
+
+  gap: 6px;
+
+  margin-left: auto;
+}
+
+.team-portal-menu button {
+  appearance: none;
+
+  border:
+    1px solid
+    transparent;
+
+  outline: none;
+
+  height: 42px;
+
+  padding:
+    0
+    18px;
+
+  border-radius: 10px;
+
+  background:
+    transparent;
+
+  color: #7d8a82;
+
+  font-size: 12px;
+  font-weight: 800;
+
+  letter-spacing: 0.7px;
+
+  cursor: pointer;
+
+  transition:
+    background 0.2s ease,
+    color 0.2s ease,
+    border-color 0.2s ease,
+    transform 0.2s ease;
+}
+
+.team-portal-menu button:hover {
+  color: #edf4ef;
+
+  background:
+    #0b1510;
+
+  border-color:
+    #20362a;
+
+  transform:
+    translateY(-1px);
+}
+
+.team-portal-menu button.active {
+  color: #58e67b;
+
+  background:
+    #0d2115;
+
+  border-color:
+    #2d5f3e;
+
+  box-shadow:
+    inset 0 0 0 1px
+    rgba(88, 230, 123, 0.06);
+}
+
+.team-portal-menu button.active:hover {
+  background:
+    #0f2618;
+
+  color: #64ea84;
+}
+
+/* =========================================================
+   TEAM CONTENT
+========================================================= */
+
+.team-portal-content {
+  width: 100%;
+  min-height:
+    calc(100vh - 76px);
+}
+
+/* =========================================================
+   TRADE PLACEHOLDER
+========================================================= */
+
+.team-coming-soon {
+  min-height:
+    calc(100vh - 76px);
+
+  padding:
+    50px
+    34px;
+
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+
+  background:
+    radial-gradient(
+      circle at 50% 10%,
+      rgba(39, 112, 61, 0.05),
+      transparent 38%
+    );
+}
+
+.team-coming-soon-card {
+  width:
+    min(
+      680px,
+      100%
+    );
+
+  margin-top: 80px;
+
+  padding:
+    52px
+    48px;
+
+  border:
+    1px solid
+    #20352a;
+
+  border-radius:
+    20px;
+
+  background:
+    #09110d;
+
+  text-align: center;
+
+  box-shadow:
+    0 25px 70px
+    rgba(0, 0, 0, 0.22);
+}
+
+.team-coming-soon-card p {
+  margin:
+    0
+    0
+    10px;
+
+  color: #718078;
+
+  font-size: 10px;
+  font-weight: 800;
+
+  letter-spacing: 2px;
+}
+
+.team-coming-soon-card h1 {
+  margin: 0;
+
+  color: #f2f6f3;
+
+  font-size: 52px;
+  font-weight: 900;
+
+  letter-spacing: -2px;
+}
+
+.team-coming-soon-card span {
+  display: block;
+
+  max-width: 480px;
+
+  margin:
+    14px
+    auto
+    0;
+
+  color: #69776f;
+
+  font-size: 14px;
+
+  line-height: 1.6;
+}
+
+/* =========================================================
+   LOGIN PAGE
+========================================================= */
+
+.login-page {
+  min-height: 100vh;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  position: relative;
+
+  overflow: hidden;
+
+  background:
+    radial-gradient(
+      circle at 30% 20%,
+      rgba(50, 150, 80, 0.08),
+      transparent 32%
+    ),
+    radial-gradient(
+      circle at 80% 80%,
+      rgba(30, 90, 50, 0.06),
+      transparent 30%
+    ),
+    #050806;
+}
+
+.login-overlay {
+  width: 100%;
+  max-width: 520px;
+
+  padding:
+    40px
+    24px;
+
+  text-align: center;
+}
+
+.brand {
+  margin-bottom: 34px;
+}
+
+.brand-small {
+  margin-bottom: 6px;
+
+  color: #708078;
+
+  font-size: 10px;
+  font-weight: 800;
+
+  letter-spacing: 3px;
+}
+
+.brand h1 {
+  margin: 0;
+
+  color: #f2f6f3;
+
+  font-size: 58px;
+  font-weight: 900;
+
+  line-height: 0.95;
+
+  letter-spacing: -3px;
+}
+
+.brand h1 span {
+  color: #51e276;
+}
+
+.brand p {
+  margin:
+    14px
+    0
+    0;
+
+  color: #6e7b73;
+
+  font-size: 11px;
+  font-weight: 800;
+
+  letter-spacing: 2px;
+}
+
+/* =========================================================
+   LOGIN CARD
+========================================================= */
+
+.login-card {
+  padding:
+    34px;
+
+  border:
+    1px solid
+    #26372e;
+
+  border-radius:
+    20px;
+
+  background:
+    rgba(10, 17, 13, 0.94);
+
+  box-shadow:
+    0 30px 80px
+    rgba(0, 0, 0, 0.35);
+}
+
+.login-card h2 {
+  margin:
+    0
+    0
+    7px;
+
+  color: #f0f5f2;
+
+  font-size: 31px;
+
+  letter-spacing:
+    -0.8px;
+}
+
+.login-subtitle {
+  margin:
+    0
+    0
+    24px;
+
+  color: #708078;
+
+  font-size: 14px;
+}
+
+.login-card input {
+  width: 100%;
+
+  height: 52px;
+
+  margin-bottom: 12px;
+
+  padding:
+    0
+    15px;
+
+  border:
+    1px solid
+    #293b31;
+
+  border-radius:
+    11px;
+
+  outline: none;
+
+  background:
+    #09110d;
+
+  color: #f0f5f2;
+
+  font-size: 14px;
+
+  transition:
+    border-color 0.2s ease,
+    box-shadow 0.2s ease;
+}
+
+.login-card input::placeholder {
+  color: #55635b;
+}
+
+.login-card input:focus {
+  border-color:
+    #42cd68;
+
+  box-shadow:
+    0 0 0 3px
+    rgba(66, 205, 104, 0.08);
+}
+
+/* =========================================================
+   LOGIN BUTTON
+========================================================= */
+
+.primary-button {
+  width: 100%;
+
+  height: 53px;
+
+  border: none;
+
+  border-radius:
+    11px;
+
+  background:
+    #51e276;
+
+  color:
+    #061009;
+
+  font-size: 12px;
+  font-weight: 900;
+
+  letter-spacing:
+    1px;
+
+  cursor: pointer;
+
+  transition:
+    transform 0.2s ease,
+    background 0.2s ease;
+}
+
+.primary-button:hover {
+  background:
+    #64e985;
+
+  transform:
+    translateY(-1px);
+}
+
+.back-button {
+  margin-top: 16px;
+
+  border: none;
+
+  background:
+    transparent;
+
+  color: #75827a;
+
+  font-size: 13px;
+
+  cursor: pointer;
+}
+
+.back-button:hover {
+  color: #d7e1da;
+}
+
+/* =========================================================
+   LOGIN OPTIONS
+========================================================= */
+
+.login-options {
+  display: grid;
+
+  gap: 11px;
+}
+
+.login-option {
+  width: 100%;
+
+  min-height: 76px;
+
+  padding:
+    16px
+    18px;
+
+  display: flex;
+  align-items: center;
+
+  border:
+    1px solid
+    #283a30;
+
+  border-radius:
+    13px;
+
+  text-align:
+    left;
+
+  background:
+    #0b1510;
+
+  color: #eef4ef;
+
+  cursor: pointer;
+
+  transition:
+    border-color 0.2s ease,
+    background 0.2s ease,
+    transform 0.2s ease;
+}
+
+.login-option:hover {
+  border-color:
+    #3c6349;
+
+  background:
+    #0e1a13;
+
+  transform:
+    translateY(-2px);
+}
+
+.login-option strong {
+  display: block;
+
+  margin-bottom: 4px;
+
+  font-size: 15px;
+}
+
+.login-option small {
+  display: block;
+
+  color: #68766d;
+
+  font-size: 11px;
+}
+
+.login-option.team strong {
+  color: #60e681;
+}
+
+.login-option.admin strong {
+  color: #d9e2dc;
+}
+
+/* =========================================================
+   FOOTER
+========================================================= */
+
+.footer-text {
+  margin-top: 25px;
+
+  color: #4d5b53;
+
+  font-size: 9px;
+  font-weight: 800;
+
+  letter-spacing: 1.7px;
+}
+
+/* =========================================================
+   MOBILE
+========================================================= */
+
+@media (max-width: 850px) {
+  .team-portal-nav {
+    min-height: auto;
+
+    padding:
+      14px
+      18px;
+
+    flex-direction: column;
+
+    gap: 13px;
+  }
+
+  .team-portal-brand {
+    justify-content: center;
+  }
+
+  .team-portal-menu {
+    width: 100%;
+
+    margin-left: 0;
+
+    justify-content: center;
+
+    overflow-x: auto;
+  }
+
+  .team-portal-menu button {
+    flex-shrink: 0;
+
+    padding:
+      0
+      15px;
+  }
+
+  .team-portal-content {
+    min-height:
+      calc(100vh - 120px);
+  }
+
+  .team-coming-soon {
+    min-height:
+      calc(100vh - 120px);
+
+    padding:
+      30px
+      16px;
+  }
+
+  .team-coming-soon-card {
+    margin-top: 40px;
+
+    padding:
+      38px
+      24px;
+  }
+}
+
+@media (max-width: 520px) {
+  .team-portal-brand strong {
+    font-size: 16px;
+  }
+
+  .team-portal-brand span {
+    font-size: 8px;
+    letter-spacing: 1.3px;
+  }
+
+  .team-portal-menu {
+    gap: 3px;
+  }
+
+  .team-portal-menu button {
+    height: 38px;
+
+    padding:
+      0
+      12px;
+
+    font-size: 10px;
+  }
+
+  .login-overlay {
+    padding:
+      25px
+      16px;
+  }
+
+  .brand h1 {
+    font-size: 45px;
+  }
+
+  .login-card {
+    padding:
+      26px
+      20px;
+  }
+}
