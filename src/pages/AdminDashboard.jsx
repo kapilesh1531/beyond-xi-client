@@ -527,8 +527,21 @@ function AdminDashboard({
             }
           );
 
-        const data =
-          await response.json();
+        const responseText =
+          await response.text();
+
+        let data = {};
+
+        try {
+          data = responseText
+            ? JSON.parse(responseText)
+            : {};
+        } catch {
+          data = {
+            message:
+              responseText
+          };
+        }
 
         if (!response.ok) {
           setError(
@@ -697,7 +710,8 @@ function AdminDashboard({
         );
 
         setError(
-          "Unable to connect to the server."
+          err.message ||
+            "Unable to connect to the server."
         );
       }
     };
