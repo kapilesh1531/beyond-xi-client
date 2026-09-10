@@ -1,0 +1,646 @@
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html,
+body {
+  width: 100%;
+  min-height: 100%;
+}
+
+body {
+  overflow-x: hidden;
+}
+
+
+/* =========================================================
+   PRESENTATION PAGE
+========================================================= */
+
+.presentation-page {
+  min-height: 100vh;
+  width: 100%;
+  position: relative;
+
+  color: #ffffff;
+
+  background-image: url("/images/football-bg.png");
+  background-size: cover;
+  background-position: center center;
+  background-repeat: no-repeat;
+}
+
+
+/* =========================================================
+   OVERLAY
+========================================================= */
+
+.presentation-overlay {
+  position: fixed;
+  inset: 0;
+
+  z-index: 0;
+
+  background: rgba(1, 10, 8, 0.72);
+
+  pointer-events: none;
+}
+
+
+/* =========================================================
+   CONTENT
+========================================================= */
+
+.presentation-content {
+  position: relative;
+  z-index: 1;
+
+  width: 100%;
+  min-height: 100vh;
+
+  padding: 18px 60px 25px;
+}
+
+
+/* =========================================================
+   HEADER
+========================================================= */
+
+.presentation-header {
+  width: 100%;
+
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  padding-bottom: 18px;
+
+  border-bottom: 1px solid rgba(255, 255, 255, 0.14);
+}
+
+
+/* =========================================================
+   BRAND
+========================================================= */
+
+.presentation-brand {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.brand-small {
+  font-size: 8px;
+
+  font-weight: 700;
+
+  letter-spacing: 3px;
+
+  color: rgba(255, 255, 255, 0.50);
+}
+
+.presentation-brand h1 {
+  margin: 0;
+
+  font-size: 32px;
+
+  line-height: 1;
+
+  font-weight: 800;
+
+  letter-spacing: -1px;
+}
+
+
+/* =========================================================
+   NAVIGATION
+========================================================= */
+
+.presentation-navigation {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.presentation-nav-btn {
+  min-width: 145px;
+
+  padding: 11px 20px;
+
+  border: 1px solid rgba(255, 255, 255, 0.18);
+
+  border-radius: 2px;
+
+  background: rgba(0, 0, 0, 0.30);
+
+  color: rgba(255, 255, 255, 0.72);
+
+  font-size: 10px;
+
+  font-weight: 800;
+
+  letter-spacing: 1.3px;
+
+  cursor: pointer;
+
+  transition:
+    background 0.2s ease,
+    border-color 0.2s ease,
+    color 0.2s ease;
+}
+
+.presentation-nav-btn:hover {
+  color: #ffffff;
+
+  background: rgba(255, 255, 255, 0.08);
+
+  border-color: rgba(255, 255, 255, 0.30);
+}
+
+.presentation-nav-btn.active {
+  color: #ffffff;
+
+  background: rgba(0, 0, 0, 0.40);
+
+  border-color: rgba(44, 226, 112, 0.65);
+}
+
+
+/* =========================================================
+   SECTION
+========================================================= */
+
+.presentation-section {
+  padding-top: 26px;
+}
+
+.section-title {
+  display: flex;
+  align-items: center;
+  gap: 11px;
+
+  margin-bottom: 23px;
+}
+
+.section-title span {
+  width: 38px;
+  height: 2px;
+
+  background: #31e875;
+}
+
+.section-title h2 {
+  margin: 0;
+
+  font-size: 14px;
+
+  font-weight: 800;
+
+  letter-spacing: 2.5px;
+}
+
+
+/* =========================================================
+   LIVE AUCTION CARD
+========================================================= */
+
+.live-player-card {
+  width: min(1100px, 100%);
+
+  min-height: 480px;
+
+  margin: 0 auto;
+
+  padding: 28px;
+
+  display: grid;
+
+  grid-template-columns: 400px 1fr;
+
+  gap: 48px;
+
+  align-items: center;
+
+  background: rgba(2, 17, 13, 0.78);
+
+  border: 1px solid rgba(71, 154, 120, 0.24);
+
+  border-radius: 15px;
+
+  box-shadow:
+    0 15px 50px rgba(0, 0, 0, 0.30);
+}
+
+
+/* =========================================================
+   PLAYER IMAGE
+========================================================= */
+
+.player-image-wrapper {
+  width: 100%;
+
+  height: 430px;
+
+  position: relative;
+
+  display: flex;
+
+  align-items: center;
+
+  justify-content: center;
+
+  overflow: hidden;
+
+  background: rgba(255, 255, 255, 0.035);
+
+  border: 1px solid rgba(255, 255, 255, 0.10);
+
+  border-radius: 10px;
+}
+
+.player-image {
+  width: 100%;
+  height: 100%;
+
+  display: block;
+
+  object-fit: cover;
+}
+
+.image-fallback {
+  width: 100%;
+  height: 100%;
+
+  display: flex;
+
+  align-items: center;
+
+  justify-content: center;
+
+  font-size: 11px;
+
+  font-weight: 700;
+
+  letter-spacing: 2px;
+
+  color: rgba(255, 255, 255, 0.28);
+}
+
+
+/* =========================================================
+   PLAYER INFORMATION
+========================================================= */
+
+.player-information {
+  width: 100%;
+}
+
+.current-player-label {
+  font-size: 9px;
+
+  font-weight: 700;
+
+  letter-spacing: 2.5px;
+
+  color: rgba(255, 255, 255, 0.45);
+}
+
+.player-name {
+  margin-top: 11px;
+
+  font-size: clamp(38px, 4vw, 57px);
+
+  line-height: 0.98;
+
+  font-weight: 800;
+
+  letter-spacing: -1.5px;
+
+  word-break: break-word;
+}
+
+
+/* =========================================================
+   PLAYER TAGS
+========================================================= */
+
+.player-tags {
+  display: flex;
+
+  flex-wrap: wrap;
+
+  gap: 7px;
+
+  margin-top: 18px;
+}
+
+.player-tags span {
+  padding: 7px 11px;
+
+  border: 1px solid rgba(255, 255, 255, 0.15);
+
+  border-radius: 5px;
+
+  background: rgba(255, 255, 255, 0.045);
+
+  font-size: 9px;
+
+  font-weight: 700;
+
+  letter-spacing: 0.8px;
+
+  text-transform: uppercase;
+
+  color: rgba(255, 255, 255, 0.82);
+}
+
+
+/* =========================================================
+   BASE PRICE
+========================================================= */
+
+.base-price-card {
+  margin-top: 25px;
+
+  padding: 18px 21px;
+
+  border: 1px solid rgba(39, 226, 111, 0.18);
+
+  border-radius: 10px;
+
+  background: rgba(0, 0, 0, 0.25);
+}
+
+.card-label {
+  font-size: 8px;
+
+  font-weight: 700;
+
+  letter-spacing: 1.7px;
+
+  color: rgba(255, 255, 255, 0.46);
+}
+
+.base-price {
+  margin-top: 8px;
+
+  font-size: clamp(28px, 2.7vw, 40px);
+
+  line-height: 1;
+
+  font-weight: 800;
+
+  color: #36eb78;
+}
+
+
+/* =========================================================
+   AUCTION STATUS
+========================================================= */
+
+.auction-status-card {
+  margin-top: 11px;
+
+  padding: 17px 21px;
+
+  border: 1px solid rgba(255, 255, 255, 0.09);
+
+  border-radius: 10px;
+
+  background: rgba(0, 0, 0, 0.19);
+}
+
+.auction-status {
+  margin-top: 7px;
+
+  font-size: 15px;
+
+  font-weight: 800;
+
+  color: #ffffff;
+}
+
+.auction-status.live {
+  color: #36eb78;
+}
+
+.auction-status.paused {
+  color: #ffffff;
+}
+
+.auction-status.completed {
+  color: #36eb78;
+}
+
+.auction-status.not-started {
+  color: rgba(255, 255, 255, 0.60);
+}
+
+
+/* =========================================================
+   RESULTS
+========================================================= */
+
+.presentation-results-section {
+  width: 100%;
+
+  padding-top: 25px;
+}
+
+.presentation-results-section > * {
+  width: 100%;
+}
+
+
+/* =========================================================
+   EMPTY STATE
+========================================================= */
+
+.presentation-empty {
+  width: min(800px, 100%);
+
+  margin: 70px auto;
+
+  padding: 50px 25px;
+
+  text-align: center;
+
+  border: 1px solid rgba(255, 255, 255, 0.11);
+
+  border-radius: 14px;
+
+  background: rgba(0, 0, 0, 0.28);
+}
+
+.empty-icon {
+  margin-bottom: 15px;
+
+  font-size: 42px;
+}
+
+.presentation-empty h2 {
+  margin: 0;
+
+  font-size: 22px;
+
+  font-weight: 800;
+}
+
+.presentation-empty p {
+  margin-top: 10px;
+
+  font-size: 12px;
+
+  color: rgba(255, 255, 255, 0.46);
+}
+
+
+/* =========================================================
+   ERROR
+========================================================= */
+
+.presentation-error {
+  width: min(1100px, 100%);
+
+  margin: 0 auto 15px;
+
+  padding: 11px 16px;
+
+  border: 1px solid rgba(255, 80, 80, 0.24);
+
+  border-radius: 7px;
+
+  background: rgba(255, 50, 50, 0.06);
+
+  font-size: 11px;
+
+  color: rgba(255, 255, 255, 0.80);
+}
+
+
+/* =========================================================
+   LOADING
+========================================================= */
+
+.presentation-loading {
+  position: fixed;
+
+  inset: 0;
+
+  z-index: 20;
+
+  display: flex;
+
+  align-items: center;
+
+  justify-content: center;
+
+  background: rgba(2, 11, 8, 0.94);
+
+  font-size: 11px;
+
+  font-weight: 800;
+
+  letter-spacing: 2.5px;
+}
+
+
+/* =========================================================
+   TABLET
+========================================================= */
+
+@media (max-width: 1050px) {
+
+  .presentation-content {
+    padding: 18px 30px 30px;
+  }
+
+  .presentation-header {
+    flex-direction: column;
+
+    align-items: flex-start;
+
+    gap: 15px;
+  }
+
+  .presentation-navigation {
+    width: 100%;
+  }
+
+  .presentation-nav-btn {
+    flex: 1;
+  }
+
+  .live-player-card {
+    grid-template-columns: 1fr;
+
+    gap: 25px;
+
+    min-height: auto;
+  }
+
+  .player-image-wrapper {
+    height: 380px;
+  }
+}
+
+
+/* =========================================================
+   MOBILE
+========================================================= */
+
+@media (max-width: 650px) {
+
+  .presentation-content {
+    padding: 15px;
+  }
+
+  .presentation-brand h1 {
+    font-size: 25px;
+  }
+
+  .presentation-navigation {
+    flex-direction: column;
+
+    width: 100%;
+  }
+
+  .presentation-nav-btn {
+    width: 100%;
+  }
+
+  .live-player-card {
+    padding: 18px;
+
+    border-radius: 10px;
+  }
+
+  .player-image-wrapper {
+    height: 300px;
+  }
+
+  .player-name {
+    font-size: 36px;
+  }
+
+  .base-price {
+    font-size: 30px;
+  }
+}
+/* =========================================================
+   RESULTS - REMOVE DUPLICATE BACKGROUND
+========================================================= */
+
+.presentation-results-section {
+  background: transparent !important;
+  background-image: none !important;
+}
+
+.presentation-results-section .results-page,
+.presentation-results-section .results-container,
+.presentation-results-section .results-content {
+  background: transparent !important;
+  background-image: none !important;
+}

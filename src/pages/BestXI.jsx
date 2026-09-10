@@ -4,471 +4,428 @@ import {
   useState
 } from "react";
 
-import {
-  io
-} from "socket.io-client";
-
 import "./BestXI.css";
 
-const socket =
-  io(
-    "http://localhost:5000",
-    {
-      autoConnect:
-        true
-    }
-  );
-
-const DEFAULT_FORMATION =
-  {
-    goalkeeper:
-      1,
-
-    defender:
-      4,
-
-    midfield:
-      3,
-
-    attack:
-      3
-  };
 
 const FORMATIONS = [
   {
-    name:
-      "4-3-3",
-
-    goalkeeper:
-      1,
-
-    defender:
-      4,
-
-    midfield:
-      3,
-
-    attack:
-      3
+    name: "4-3-3",
+    goalkeeper: 1,
+    defender: 4,
+    midfield: 3,
+    attack: 3
   },
-
   {
-    name:
-      "4-4-2",
-
-    goalkeeper:
-      1,
-
-    defender:
-      4,
-
-    midfield:
-      4,
-
-    attack:
-      2
+    name: "4-4-2",
+    goalkeeper: 1,
+    defender: 4,
+    midfield: 4,
+    attack: 2
   },
-
   {
-    name:
-      "4-2-3-1",
-
-    goalkeeper:
-      1,
-
-    defender:
-      4,
-
-    midfield:
-      5,
-
-    attack:
-      1
+    name: "4-2-3-1",
+    goalkeeper: 1,
+    defender: 4,
+    midfield: 5,
+    attack: 1
   },
-
   {
-    name:
-      "3-4-3",
-
-    goalkeeper:
-      1,
-
-    defender:
-      3,
-
-    midfield:
-      4,
-
-    attack:
-      3
+    name: "3-4-3",
+    goalkeeper: 1,
+    defender: 3,
+    midfield: 4,
+    attack: 3
   },
-
   {
-    name:
-      "3-5-2",
-
-    goalkeeper:
-      1,
-
-    defender:
-      3,
-
-    midfield:
-      5,
-
-    attack:
-      2
+    name: "3-5-2",
+    goalkeeper: 1,
+    defender: 3,
+    midfield: 5,
+    attack: 2
   },
-
   {
-    name:
-      "5-3-2",
-
-    goalkeeper:
-      1,
-
-    defender:
-      5,
-
-    midfield:
-      3,
-
-    attack:
-      2
+    name: "5-3-2",
+    goalkeeper: 1,
+    defender: 5,
+    midfield: 3,
+    attack: 2
   }
 ];
+
+
+const DEFAULT_FORMATION = {
+  goalkeeper: 1,
+  defender: 4,
+  midfield: 3,
+  attack: 3
+};
+
 
 function BestXI({
   teamId
 }) {
+
+  const [
+    team,
+    setTeam
+  ] = useState(null);
+
   const [
     squad,
     setSquad
-  ] =
-    useState([]);
+  ] = useState([]);
 
   const [
     formation,
     setFormation
-  ] =
-    useState(
-      DEFAULT_FORMATION
-    );
+  ] = useState(
+    DEFAULT_FORMATION
+  );
 
   const [
     selectedPlayers,
     setSelectedPlayers
-  ] =
-    useState([]);
+  ] = useState([]);
+
+  const [
+    tradeStatus,
+    setTradeStatus
+  ] = useState("Closed");
 
   const [
     submitted,
     setSubmitted
-  ] =
-    useState(false);
+  ] = useState(false);
 
   const [
     submittedAt,
     setSubmittedAt
-  ] =
-    useState(null);
+  ] = useState(null);
 
   const [
     loading,
     setLoading
-  ] =
-    useState(true);
+  ] = useState(true);
 
   const [
     saving,
     setSaving
-  ] =
-    useState(false);
+  ] = useState(false);
 
   const [
     message,
     setMessage
-  ] =
-    useState("");
+  ] = useState("");
 
   const [
     error,
     setError
-  ] =
-    useState("");
+  ] = useState("");
 
-  const clearMessages =
-    () => {
-      setMessage("");
-      setError("");
-    };
 
-  const getImageUrl =
-    (image) => {
-      if (!image) {
-        return "";
+  /* =========================================================
+     CLEAR MESSAGES
+  ========================================================= */
+
+  const clearMessages = () => {
+    setMessage("");
+    setError("");
+  };
+
+
+  /* =========================================================
+     IMAGE
+  ========================================================= */
+
+  const getImageUrl = (
+    image
+  ) => {
+
+    if (!image) {
+      return "";
+    }
+
+    if (
+      image.startsWith("http://") ||
+      image.startsWith("https://")
+    ) {
+      return image;
+    }
+
+    return `http://localhost:5000${image}`;
+  };
+
+
+  /* =========================================================
+     FETCH BEST XI
+  ========================================================= */
+
+  const fetchBestXI = async () => {
+
+    if (!teamId) {
+
+      setError(
+        "Team account could not be identified."
+      );
+
+      setLoading(false);
+
+      return;
+    }
+
+    try {
+
+      const response =
+        await fetch(
+          `http://localhost:5000/api/teams/${teamId}/best-xi`
+        );
+
+      const data =
+        await response.json();
+
+      if (!response.ok) {
+
+        throw new Error(
+          data.message ||
+          "Failed to load Best XI."
+        );
       }
+
+      setTeam(
+        data.team ||
+        null
+      );
+
+      setSquad(
+        Array.isArray(
+          data.squad
+        )
+          ? data.squad
+          : []
+      );
 
       if (
-        image.startsWith(
-          "http://"
-        ) ||
-        image.startsWith(
-          "https://"
-        )
+        data.bestXI?.formation
       ) {
-        return image;
+
+        setFormation({
+          goalkeeper:
+            Number(
+              data.bestXI.formation
+                .goalkeeper
+            ),
+
+          defender:
+            Number(
+              data.bestXI.formation
+                .defender
+            ),
+
+          midfield:
+            Number(
+              data.bestXI.formation
+                .midfield
+            ),
+
+          attack:
+            Number(
+              data.bestXI.formation
+                .attack
+            )
+        });
       }
 
-      return `http://localhost:5000${image}`;
-    };
+      setSelectedPlayers(
+        Array.isArray(
+          data.bestXI?.players
+        )
+          ? data.bestXI.players.map(
+              (player) =>
+                String(
+                  player._id ||
+                  player
+                )
+            )
+          : []
+      );
 
-  /* =======================================================
-     FETCH BEST XI
-  ======================================================= */
+      setSubmitted(
+        Boolean(
+          data.bestXI?.submitted
+        )
+      );
 
-  const fetchBestXI =
+      setSubmittedAt(
+        data.bestXI?.submittedAt ||
+        null
+      );
+
+      setTradeStatus(
+        data.tradeStatus ||
+        "Closed"
+      );
+
+    } catch (err) {
+
+      console.error(
+        "Fetch Best XI error:",
+        err
+      );
+
+      setError(
+        err.message ||
+        "Unable to load Best XI."
+      );
+
+    } finally {
+
+      setLoading(false);
+
+    }
+  };
+
+
+  /* =========================================================
+     FETCH TRADE STATUS
+  ========================================================= */
+
+  const fetchTradeStatus =
     async () => {
+
       try {
-        setLoading(
-          true
-        );
 
         const response =
           await fetch(
-            `http://localhost:5000/api/teams/${teamId}/best-xi`
+            "http://localhost:5000/api/trade/status"
           );
 
         const data =
           await response.json();
 
-        if (!response.ok) {
-          throw new Error(
-            data.message ||
-              "Failed to load Best XI."
+        if (
+          response.ok &&
+          data.status
+        ) {
+
+          setTradeStatus(
+            data.status
           );
         }
 
-        setSquad(
-          Array.isArray(
-            data.squad
-          )
-            ? data.squad
-            : []
-        );
-
-        const savedFormation =
-          data.bestXI
-            ?.formation;
-
-        if (
-          savedFormation
-        ) {
-          setFormation({
-            goalkeeper:
-              Number(
-                savedFormation.goalkeeper
-              ),
-
-            defender:
-              Number(
-                savedFormation.defender
-              ),
-
-            midfield:
-              Number(
-                savedFormation.midfield
-              ),
-
-            attack:
-              Number(
-                savedFormation.attack
-              )
-          });
-        }
-
-        const savedPlayers =
-          Array.isArray(
-            data.bestXI
-              ?.players
-          )
-            ? data.bestXI.players.map(
-                (player) =>
-                  String(
-                    player._id ||
-                      player
-                  )
-              )
-            : [];
-
-        setSelectedPlayers(
-          savedPlayers
-        );
-
-        setSubmitted(
-          Boolean(
-            data.bestXI
-              ?.submitted
-          )
-        );
-
-        setSubmittedAt(
-          data.bestXI
-            ?.submittedAt ||
-            null
-        );
       } catch (err) {
+
         console.error(
-          "Best XI fetch error:",
+          "Trade status error:",
           err
         );
 
-        setError(
-          err.message ||
-            "Unable to load Best XI."
-        );
-      } finally {
-        setLoading(
-          false
-        );
       }
     };
 
+
+  /* =========================================================
+     INITIAL LOAD
+  ========================================================= */
+
   useEffect(() => {
-    if (!teamId) {
-      setError(
-        "Team could not be identified."
-      );
-
-      setLoading(
-        false
-      );
-
-      return;
-    }
 
     fetchBestXI();
+    fetchTradeStatus();
 
-    socket.emit(
-      "joinAuction"
-    );
-
-    const handleTeamsUpdate =
-      (updatedTeams) => {
-        if (
-          Array.isArray(
-            updatedTeams
-          )
-        ) {
-          const updatedTeam =
-            updatedTeams.find(
-              (team) =>
-                String(
-                  team._id
-                ) ===
-                String(
-                  teamId
-                )
-            );
-
-          if (
-            updatedTeam
-          ) {
-            setSquad(
-              Array.isArray(
-                updatedTeam.players
-              )
-                ? updatedTeam.players
-                : []
-            );
-
-            if (
-              updatedTeam.bestXI
-            ) {
-              setSubmitted(
-                Boolean(
-                  updatedTeam
-                    .bestXI
-                    .submitted
-                )
-              );
-            }
-          }
-        }
-      };
-
-    socket.on(
-      "teams:update",
-      handleTeamsUpdate
-    );
-
-    return () => {
-      socket.off(
-        "teams:update",
-        handleTeamsUpdate
-      );
-    };
   }, [teamId]);
 
-  /* =======================================================
-     POSITION COUNTS
-  ======================================================= */
+
+  /* =========================================================
+     TRADE STATUS POLLING
+  ========================================================= */
+
+  useEffect(() => {
+
+    const interval =
+      setInterval(
+        () => {
+          fetchTradeStatus();
+        },
+        1000
+      );
+
+    return () => {
+
+      clearInterval(
+        interval
+      );
+
+    };
+
+  }, []);
+
+
+  /* =========================================================
+     SELECTED PLAYER OBJECTS
+  ========================================================= */
 
   const selectedPlayerObjects =
     useMemo(
-      () => {
-        return squad.filter(
+      () =>
+        squad.filter(
           (player) =>
             selectedPlayers.includes(
-              String(
-                player._id
-              )
+              String(player._id)
             )
-        );
-      },
+        ),
       [
         squad,
         selectedPlayers
       ]
     );
 
-  const selectedCounts =
+
+  /* =========================================================
+     POSITION COUNTS
+  ========================================================= */
+
+  const counts =
     useMemo(
-      () => {
-        return {
-          goalkeeper:
-            selectedPlayerObjects.filter(
-              (player) =>
-                player.position ===
-                "Goalkeeper"
-            ).length,
+      () => ({
 
-          defender:
-            selectedPlayerObjects.filter(
-              (player) =>
-                player.position ===
-                "Defender"
-            ).length,
+        goalkeeper:
+          selectedPlayerObjects.filter(
+            (player) =>
+              player.position ===
+              "Goalkeeper"
+          ).length,
 
-          midfield:
-            selectedPlayerObjects.filter(
-              (player) =>
-                player.position ===
-                "Midfielder"
-            ).length,
+        defender:
+          selectedPlayerObjects.filter(
+            (player) =>
+              player.position ===
+              "Defender"
+          ).length,
 
-          attack:
-            selectedPlayerObjects.filter(
-              (player) =>
-                player.position ===
-                "Forward"
-            ).length
-        };
-      },
+        midfield:
+          selectedPlayerObjects.filter(
+            (player) =>
+              player.position ===
+              "Midfielder"
+          ).length,
+
+        attack:
+          selectedPlayerObjects.filter(
+            (player) =>
+              player.position ===
+              "Forward"
+          ).length
+
+      }),
       [
         selectedPlayerObjects
       ]
     );
+
+
+  /* =========================================================
+     FORMATION VALIDATION
+  ========================================================= */
 
   const totalPlayers =
     formation.goalkeeper +
@@ -476,98 +433,96 @@ function BestXI({
     formation.midfield +
     formation.attack;
 
-  const formationIsValid =
-    totalPlayers ===
-    11;
+  const formationValid =
+    totalPlayers === 11;
 
-  const positionsMatch =
-    selectedCounts.goalkeeper ===
+  const positionsValid =
+    counts.goalkeeper ===
       formation.goalkeeper &&
-    selectedCounts.defender ===
+    counts.defender ===
       formation.defender &&
-    selectedCounts.midfield ===
+    counts.midfield ===
       formation.midfield &&
-    selectedCounts.attack ===
+    counts.attack ===
       formation.attack;
 
-  const readyToSubmit =
-    formationIsValid &&
-    positionsMatch &&
-    selectedPlayers.length ===
-      11;
+  const elevenSelected =
+    selectedPlayers.length === 11;
 
-  /* =======================================================
-     CHOOSE FORMATION
-  ======================================================= */
+  const ready =
+    formationValid &&
+    positionsValid &&
+    elevenSelected;
 
-  const selectFormation =
-    (newFormation) => {
+  const finalSubmissionAvailable =
+    tradeStatus === "Ended" &&
+    ready &&
+    !submitted;
+
+
+  /* =========================================================
+     FORMATION
+  ========================================================= */
+
+  const chooseFormation =
+    (item) => {
+
       if (submitted) {
         return;
       }
 
       clearMessages();
 
-      setFormation(
-        {
-          goalkeeper:
-            Number(
-              newFormation.goalkeeper
-            ),
+      setFormation({
 
-          defender:
-            Number(
-              newFormation.defender
-            ),
+        goalkeeper:
+          item.goalkeeper,
 
-          midfield:
-            Number(
-              newFormation.midfield
-            ),
+        defender:
+          item.defender,
 
-          attack:
-            Number(
-              newFormation.attack
-            )
-        }
-      );
+        midfield:
+          item.midfield,
 
-      setSelectedPlayers(
-        []
-      );
+        attack:
+          item.attack
+
+      });
+
+      setSelectedPlayers([]);
+
     };
 
-  /* =======================================================
-     SELECT PLAYER
-  ======================================================= */
+
+  /* =========================================================
+     PLAYER SELECTION
+  ========================================================= */
 
   const togglePlayer =
     (player) => {
+
       if (submitted) {
         return;
       }
 
       clearMessages();
 
-      const playerId =
+      const id =
         String(
           player._id
         );
 
-      const isSelected =
+      if (
         selectedPlayers.includes(
-          playerId
-        );
+          id
+        )
+      ) {
 
-      if (isSelected) {
         setSelectedPlayers(
-          (
-            current
-          ) =>
+          (current) =>
             current.filter(
-              (id) =>
-                id !==
-                playerId
+              (playerId) =>
+                playerId !== id
             )
         );
 
@@ -578,133 +533,100 @@ function BestXI({
         selectedPlayers.length >=
         11
       ) {
+
         setError(
-          "Your Best XI can contain only 11 players."
+          "Only 11 players can be selected."
         );
 
         return;
       }
 
-      let maxAllowed =
-        0;
+      let key =
+        "attack";
 
-      switch (
-        player.position
+      if (
+        player.position ===
+        "Goalkeeper"
       ) {
-        case "Goalkeeper":
-          maxAllowed =
-            formation.goalkeeper;
-          break;
 
-        case "Defender":
-          maxAllowed =
-            formation.defender;
-          break;
+        key =
+          "goalkeeper";
 
-        case "Midfielder":
-          maxAllowed =
-            formation.midfield;
-          break;
+      } else if (
+        player.position ===
+        "Defender"
+      ) {
 
-        case "Forward":
-          maxAllowed =
-            formation.attack;
-          break;
+        key =
+          "defender";
 
-        default:
-          maxAllowed =
-            0;
+      } else if (
+        player.position ===
+        "Midfielder"
+      ) {
+
+        key =
+          "midfield";
       }
 
       if (
-        maxAllowed ===
-        0
+        counts[key] >=
+        formation[key]
       ) {
+
         setError(
-          `${player.name} cannot be used in the selected formation.`
-        );
-
-        return;
-      }
-
-      const currentlySelected =
-        selectedPlayerObjects.filter(
-          (item) =>
-            item.position ===
-            player.position
-        ).length;
-
-      if (
-        currentlySelected >=
-        maxAllowed
-      ) {
-        setError(
-          `You already selected the maximum number of ${player.position.toLowerCase()}s for this formation.`
+          `The selected formation limit for ${player.position} has been reached.`
         );
 
         return;
       }
 
       setSelectedPlayers(
-        (
-          current
-        ) => [
+        (current) => [
           ...current,
-          playerId
+          id
         ]
       );
+
     };
 
-  /* =======================================================
+
+  /* =========================================================
      SAVE DRAFT
-  ======================================================= */
+  ========================================================= */
 
   const saveDraft =
     async () => {
+
       clearMessages();
 
-      if (
-        !formationIsValid
-      ) {
+      if (submitted) {
+
         setError(
-          "The formation must contain exactly 11 players."
+          "Final Best XI is already locked."
         );
 
         return;
       }
 
-      if (
-        selectedPlayers.length !==
-        11
-      ) {
+      if (!ready) {
+
         setError(
-          "Select exactly 11 players before saving."
+          "Select exactly 11 players that match your formation."
         );
 
         return;
       }
 
-      if (
-        !positionsMatch
-      ) {
-        setError(
-          "Your selected players do not match the chosen formation."
-        );
-
-        return;
-      }
-
-      setSaving(
-        true
-      );
+      setSaving(true);
 
       try {
+
         const response =
           await fetch(
             `http://localhost:5000/api/teams/${teamId}/best-xi`,
             {
-              method:
-                "PUT",
+              method: "PUT",
 
               headers: {
                 "Content-Type":
@@ -724,9 +646,10 @@ function BestXI({
           await response.json();
 
         if (!response.ok) {
+
           throw new Error(
             data.message ||
-              "Failed to save Best XI."
+            "Failed to save draft."
           );
         }
 
@@ -734,37 +657,62 @@ function BestXI({
           "Best XI draft saved successfully."
         );
 
-        await fetchBestXI();
+        setSubmitted(false);
+
       } catch (err) {
+
         console.error(
-          "Save Best XI error:",
+          "Save draft error:",
           err
         );
 
         setError(
           err.message ||
-            "Failed to save Best XI."
+          "Failed to save draft."
         );
+
       } finally {
-        setSaving(
-          false
-        );
+
+        setSaving(false);
+
       }
     };
 
-  /* =======================================================
-     FINAL SUBMIT
-  ======================================================= */
 
-  const submitBestXI =
+  /* =========================================================
+     FINAL SUBMIT
+  ========================================================= */
+
+  const submitFinal =
     async () => {
+
       clearMessages();
 
       if (
-        !readyToSubmit
+        tradeStatus !==
+        "Ended"
       ) {
+
         setError(
-          "Complete a valid 11-player Best XI before submitting."
+          "Final Best XI submission is available only after the trade window has ended."
+        );
+
+        return;
+      }
+
+      if (submitted) {
+
+        setError(
+          "Your Best XI has already been submitted."
+        );
+
+        return;
+      }
+
+      if (!ready) {
+
+        setError(
+          "Select a valid 11-player Best XI first."
         );
 
         return;
@@ -772,24 +720,22 @@ function BestXI({
 
       const confirmed =
         window.confirm(
-          "Submit this Best XI as your final selection? You will not be able to change it afterward."
+          "Submit your final Best XI? You will not be able to change it afterward."
         );
 
       if (!confirmed) {
         return;
       }
 
-      setSaving(
-        true
-      );
+      setSaving(true);
 
       try {
+
         const response =
           await fetch(
             `http://localhost:5000/api/teams/${teamId}/best-xi/submit`,
             {
-              method:
-                "POST",
+              method: "POST",
 
               headers: {
                 "Content-Type":
@@ -809,64 +755,75 @@ function BestXI({
           await response.json();
 
         if (!response.ok) {
+
           throw new Error(
             data.message ||
-              "Failed to submit Best XI."
+            "Failed to submit final Best XI."
           );
         }
-
-        setMessage(
-          "Best XI submitted successfully."
-        );
 
         setSubmitted(
           true
         );
 
         setSubmittedAt(
-          data.bestXI
-            ?.submittedAt ||
-            new Date()
+          data.bestXI?.submittedAt ||
+          new Date()
         );
 
-        await fetchBestXI();
+        setMessage(
+          "Final Best XI submitted successfully. Your team is now locked."
+        );
+
       } catch (err) {
+
         console.error(
-          "Submit Best XI error:",
+          "Final Best XI error:",
           err
         );
 
         setError(
           err.message ||
-            "Failed to submit Best XI."
+          "Failed to submit final Best XI."
         );
+
       } finally {
-        setSaving(
-          false
-        );
+
+        setSaving(false);
+
       }
     };
 
-  /* =======================================================
+
+  /* =========================================================
      LOADING
-  ======================================================= */
+  ========================================================= */
 
   if (loading) {
+
     return (
       <section className="best-xi-page">
+
         <div className="best-xi-loading">
           Loading Best XI...
         </div>
+
       </section>
     );
+
   }
+
+
+  /* =========================================================
+     RENDER
+  ========================================================= */
 
   return (
     <section className="best-xi-page">
 
-      {/* ===================================================
+      {/* =====================================================
           HEADER
-      =================================================== */}
+      ===================================================== */}
 
       <header className="best-xi-header">
 
@@ -881,8 +838,8 @@ function BestXI({
           </h1>
 
           <p className="best-xi-subtitle">
-            Choose your final starting
-            eleven from your purchased squad.
+            Build your strongest starting eleven
+            from your final squad.
           </p>
 
         </div>
@@ -891,15 +848,26 @@ function BestXI({
           className={`best-xi-status ${
             submitted
               ? "submitted"
+              : tradeStatus ===
+                "Ended"
+              ? "final"
               : "draft"
           }`}
         >
           {submitted
-            ? "SUBMITTED"
+            ? "LOCKED"
+            : tradeStatus ===
+              "Ended"
+            ? "FINAL OPEN"
             : "DRAFT"}
         </div>
 
       </header>
+
+
+      {/* =====================================================
+          MESSAGE
+      ===================================================== */}
 
       {message && (
         <div className="best-xi-success">
@@ -913,9 +881,10 @@ function BestXI({
         </div>
       )}
 
-      {/* ===================================================
+
+      {/* =====================================================
           FORMATION
-      =================================================== */}
+      ===================================================== */}
 
       <section className="formation-section">
 
@@ -928,7 +897,7 @@ function BestXI({
             </p>
 
             <h2>
-              Choose your combination
+              Choose your formation
             </h2>
 
           </div>
@@ -936,29 +905,29 @@ function BestXI({
           <div className="formation-total">
 
             <span>
-              PLAYERS
+              SELECTED
             </span>
 
             <strong
               className={
-                formationIsValid
+                ready
                   ? "valid"
                   : "invalid"
               }
             >
-              {totalPlayers} / 11
+              {selectedPlayers.length}
+              {" / 11"}
             </strong>
 
           </div>
 
         </div>
 
+
         <div className="formation-grid">
 
           {FORMATIONS.map(
-            (
-              item
-            ) => {
+            (item) => {
 
               const active =
                 formation.goalkeeper ===
@@ -972,6 +941,7 @@ function BestXI({
 
               return (
                 <button
+                  type="button"
                   key={
                     item.name
                   }
@@ -980,13 +950,13 @@ function BestXI({
                       ? "active"
                       : ""
                   }`}
-                  onClick={() =>
-                    selectFormation(
-                      item
-                    )
-                  }
                   disabled={
                     submitted
+                  }
+                  onClick={() =>
+                    chooseFormation(
+                      item
+                    )
                   }
                 >
 
@@ -996,11 +966,11 @@ function BestXI({
 
                   <span>
                     {item.goalkeeper}
-                    {" GK  •  "}
+                    {" GK • "}
                     {item.defender}
-                    {" DEF  •  "}
+                    {" DEF • "}
                     {item.midfield}
-                    {" MID  •  "}
+                    {" MID • "}
                     {item.attack}
                     {" ATT"}
                   </span>
@@ -1012,167 +982,12 @@ function BestXI({
 
         </div>
 
-        <div className="custom-formation">
-
-          <p className="best-xi-label">
-            CUSTOM COMBINATION
-          </p>
-
-          <div className="custom-formation-grid">
-
-            <label>
-
-              <span>
-                GOALKEEPER
-              </span>
-
-              <input
-                type="number"
-                min="1"
-                max="1"
-                value={
-                  formation.goalkeeper
-                }
-                disabled
-              />
-
-            </label>
-
-            <label>
-
-              <span>
-                DEFENDER
-              </span>
-
-              <input
-                type="number"
-                min="2"
-                max="5"
-                value={
-                  formation.defender
-                }
-                disabled={
-                  submitted
-                }
-                onChange={(
-                  event
-                ) => {
-                  const value =
-                    Number(
-                      event.target.value
-                    );
-
-                  if (
-                    value >=
-                      2 &&
-                    value <=
-                      5
-                  ) {
-                    selectFormation({
-                      ...formation,
-
-                      defender:
-                        value
-                    });
-                  }
-                }}
-              />
-
-            </label>
-
-            <label>
-
-              <span>
-                MIDFIELD
-              </span>
-
-              <input
-                type="number"
-                min="2"
-                max="5"
-                value={
-                  formation.midfield
-                }
-                disabled={
-                  submitted
-                }
-                onChange={(
-                  event
-                ) => {
-                  const value =
-                    Number(
-                      event.target.value
-                    );
-
-                  if (
-                    value >=
-                      2 &&
-                    value <=
-                      5
-                  ) {
-                    selectFormation({
-                      ...formation,
-
-                      midfield:
-                        value
-                    });
-                  }
-                }}
-              />
-
-            </label>
-
-            <label>
-
-              <span>
-                ATTACK
-              </span>
-
-              <input
-                type="number"
-                min="1"
-                max="5"
-                value={
-                  formation.attack
-                }
-                disabled={
-                  submitted
-                }
-                onChange={(
-                  event
-                ) => {
-                  const value =
-                    Number(
-                      event.target.value
-                    );
-
-                  if (
-                    value >=
-                      1 &&
-                    value <=
-                      5
-                  ) {
-                    selectFormation({
-                      ...formation,
-
-                      attack:
-                        value
-                    });
-                  }
-                }}
-              />
-
-            </label>
-
-          </div>
-
-        </div>
-
       </section>
 
-      {/* ===================================================
-          POSITION REQUIREMENTS
-      =================================================== */}
+
+      {/* =====================================================
+          POSITION COUNTS
+      ===================================================== */}
 
       <section className="requirements-section">
 
@@ -1183,12 +998,13 @@ function BestXI({
           </span>
 
           <strong>
-            {selectedCounts.goalkeeper}
+            {counts.goalkeeper}
             {" / "}
             {formation.goalkeeper}
           </strong>
 
         </div>
+
 
         <div className="requirement-card">
 
@@ -1197,12 +1013,13 @@ function BestXI({
           </span>
 
           <strong>
-            {selectedCounts.defender}
+            {counts.defender}
             {" / "}
             {formation.defender}
           </strong>
 
         </div>
+
 
         <div className="requirement-card">
 
@@ -1211,21 +1028,22 @@ function BestXI({
           </span>
 
           <strong>
-            {selectedCounts.midfield}
+            {counts.midfield}
             {" / "}
             {formation.midfield}
           </strong>
 
         </div>
 
+
         <div className="requirement-card">
 
           <span>
-            ATT
+            FWD
           </span>
 
           <strong>
-            {selectedCounts.attack}
+            {counts.attack}
             {" / "}
             {formation.attack}
           </strong>
@@ -1234,9 +1052,10 @@ function BestXI({
 
       </section>
 
-      {/* ===================================================
-          PLAYERS
-      =================================================== */}
+
+      {/* =====================================================
+          SQUAD
+      ===================================================== */}
 
       <section className="players-section">
 
@@ -1249,19 +1068,18 @@ function BestXI({
             </p>
 
             <h2>
-              Select your players
+              Select your starting eleven
             </h2>
 
           </div>
 
           <div className="selection-counter">
-
             {selectedPlayers.length}
             {" / 11"}
-
           </div>
 
         </div>
+
 
         {squad.length ===
         0 ? (
@@ -1273,8 +1091,8 @@ function BestXI({
             </h3>
 
             <p>
-              Purchase players during the
-              auction before creating your Best XI.
+              Your purchased players will
+              appear here.
             </p>
 
           </div>
@@ -1284,75 +1102,34 @@ function BestXI({
           <div className="draft-player-grid">
 
             {squad.map(
-              (
-                player
-              ) => {
+              (player) => {
 
-                const playerId =
+                const id =
                   String(
                     player._id
                   );
 
-                const selected =
+                const isSelected =
                   selectedPlayers.includes(
-                    playerId
-                  );
-
-                const positionKey =
-                  player.position ===
-                  "Goalkeeper"
-                    ? "goalkeeper"
-                    : player.position ===
-                      "Defender"
-                    ? "defender"
-                    : player.position ===
-                      "Midfielder"
-                    ? "midfield"
-                    : "attack";
-
-                const positionLimit =
-                  formation[
-                    positionKey
-                  ];
-
-                const currentPositionCount =
-                  selectedCounts[
-                    positionKey
-                  ];
-
-                const positionFull =
-                  currentPositionCount >=
-                  positionLimit;
-
-                const disabled =
-                  submitted ||
-                  (
-                    !selected &&
-                    (
-                      selectedPlayers.length >=
-                        11 ||
-                      positionFull
-                    )
+                    id
                   );
 
                 return (
                   <button
                     type="button"
-                    key={
-                      playerId
-                    }
+                    key={id}
                     className={`draft-player-card ${
-                      selected
+                      isSelected
                         ? "selected"
                         : ""
                     }`}
+                    disabled={
+                      submitted
+                    }
                     onClick={() =>
                       togglePlayer(
                         player
                       )
-                    }
-                    disabled={
-                      disabled
                     }
                   >
 
@@ -1379,11 +1156,13 @@ function BestXI({
 
                     </div>
 
+
                     <div className="draft-player-info">
 
                       <div className="draft-player-position">
                         {
-                          player.position
+                          player.position ||
+                          "Unknown"
                         }
                       </div>
 
@@ -1396,32 +1175,31 @@ function BestXI({
                       <p>
                         Rating{" "}
                         {
-                          player.rating
+                          player.rating ??
+                          "—"
                         }
+
                         {" • "}
+
                         {
-                          player.category
+                          player.category ||
+                          "—"
                         }
                       </p>
 
                       <small>
-                        €
-                        {Number(
-                          player.soldPrice ||
-                            0
-                        ).toLocaleString(
-                          "en-US"
+                        {formatPlayerValue(
+                          player
                         )}
                       </small>
 
                     </div>
 
-                    <div className="draft-check">
 
-                      {selected
+                    <div className="draft-check">
+                      {isSelected
                         ? "✓"
                         : "+"}
-
                     </div>
 
                   </button>
@@ -1430,13 +1208,77 @@ function BestXI({
             )}
 
           </div>
+
         )}
 
       </section>
 
-      {/* ===================================================
+
+      {/* =====================================================
+          VALIDATION
+      ===================================================== */}
+
+      {!submitted && (
+
+        <section className="best-xi-validation">
+
+          {!formationValid && (
+            <div>
+              ⚠ Formation must contain exactly
+              11 players.
+            </div>
+          )}
+
+
+          {formationValid &&
+            selectedPlayers.length !==
+              11 && (
+
+              <div>
+                Select{" "}
+                {11 -
+                  selectedPlayers.length}
+                {" more player"}
+                {11 -
+                  selectedPlayers.length !==
+                  1
+                  ? "s"
+                  : ""}
+                .
+              </div>
+
+            )}
+
+
+          {formationValid &&
+            selectedPlayers.length ===
+              11 &&
+            !positionsValid && (
+
+              <div>
+                ⚠ Selected players do not match
+                your chosen formation.
+              </div>
+
+            )}
+
+
+          {ready && (
+
+            <div className="validation-good">
+              ✓ Your Best XI is valid and ready.
+            </div>
+
+          )}
+
+        </section>
+
+      )}
+
+
+      {/* =====================================================
           SUBMISSION
-      =================================================== */}
+      ===================================================== */}
 
       <section className="best-xi-submit-section">
 
@@ -1446,24 +1288,32 @@ function BestXI({
 
             <div>
 
+              <p className="best-xi-label">
+                FINAL BEST XI
+              </p>
+
+              <h3>
+                Best XI Submitted
+              </h3>
+
               <span>
-                BEST XI SUBMITTED
+                Your final XI is locked and
+                will be used for Results.
               </span>
 
-              <strong>
-                Your final starting XI is locked.
-              </strong>
-
               {submittedAt && (
+
                 <small>
-                  Submitted on{" "}
+                  Submitted:{" "}
                   {new Date(
                     submittedAt
                   ).toLocaleString()}
                 </small>
+
               )}
 
             </div>
+
 
             <div className="submitted-check">
               ✓
@@ -1482,17 +1332,27 @@ function BestXI({
               </p>
 
               <h3>
-                {readyToSubmit
-                  ? "Your Best XI is ready."
-                  : "Complete your Best XI before submitting."}
+
+                {tradeStatus !==
+                "Ended"
+                  ? "Final submission is locked"
+                  : ready
+                  ? "Your Best XI is ready"
+                  : "Complete your Best XI"}
+
               </h3>
 
               <p>
-                You can change the formation
-                and players until you submit.
+
+                {tradeStatus !==
+                "Ended"
+                  ? "Save your draft now and make changes after trading ends."
+                  : "Submit your final eleven when you are satisfied with your selection."}
+
               </p>
 
             </div>
+
 
             <div className="draft-actions">
 
@@ -1504,28 +1364,37 @@ function BestXI({
                 }
                 disabled={
                   saving ||
-                  !readyToSubmit
+                  submitted ||
+                  !ready
                 }
               >
+
                 {saving
                   ? "SAVING..."
                   : "SAVE DRAFT"}
+
               </button>
+
 
               <button
                 type="button"
                 className="submit-xi-button"
                 onClick={
-                  submitBestXI
+                  submitFinal
                 }
                 disabled={
                   saving ||
-                  !readyToSubmit
+                  !finalSubmissionAvailable
                 }
               >
-                {saving
+
+                {tradeStatus !==
+                "Ended"
+                  ? "SUBMIT AFTER TRADE"
+                  : saving
                   ? "SUBMITTING..."
-                  : "SUBMIT BEST XI"}
+                  : "SUBMIT FINAL BEST XI"}
+
               </button>
 
             </div>
@@ -1539,5 +1408,31 @@ function BestXI({
     </section>
   );
 }
+
+
+/* =========================================================
+   HELPER
+========================================================= */
+
+function formatPlayerValue(
+  player
+) {
+
+  const value =
+    Number(
+      player.soldPrice ??
+      player.basePrice ??
+      0
+    );
+
+  if (!value) {
+    return "Value unavailable";
+  }
+
+  return `€${value.toLocaleString(
+    "en-US"
+  )}`;
+}
+
 
 export default BestXI;

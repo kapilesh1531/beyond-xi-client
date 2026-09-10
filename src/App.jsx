@@ -1,52 +1,112 @@
-import { useState } from "react";
+import {
+  useState
+} from "react";
 
 import "./index.css";
 
-import AdminDashboard from "./pages/AdminDashboard";
-import TeamDashboard from "./pages/TeamDashboard";
-import BestXI from "./pages/BestXI";
+import AdminDashboard
+  from "./pages/AdminDashboard";
+
+import TeamDashboard
+  from "./pages/TeamDashboard";
+
+import BestXI
+  from "./pages/BestXI";
+
+import Trade
+  from "./pages/Trade";
+
+import Presentation
+  from "./pages/Presentation";
+
 
 function App() {
-  const [loginType, setLoginType] =
-    useState(null);
-
-  const [adminLoggedIn, setAdminLoggedIn] =
-    useState(false);
-
-  const [teamLoggedIn, setTeamLoggedIn] =
-    useState(false);
-
-  const [loggedInTeamId, setLoggedInTeamId] =
-    useState("");
-
-  const [teamPage, setTeamPage] =
-    useState("dashboard");
-
   /* =========================================================
-     ADMIN
+     LOGIN STATE
   ========================================================= */
 
-  const [adminUsername, setAdminUsername] =
-    useState("");
+  const [
+    loginType,
+    setLoginType
+  ] = useState(null);
 
-  const [adminPassword, setAdminPassword] =
-    useState("");
+  const [
+    adminLoggedIn,
+    setAdminLoggedIn
+  ] = useState(false);
 
-  const [adminError, setAdminError] =
-    useState("");
+  const [
+    teamLoggedIn,
+    setTeamLoggedIn
+  ] = useState(false);
+
+  const [
+    loggedInTeamId,
+    setLoggedInTeamId
+  ] = useState("");
+
 
   /* =========================================================
-     TEAM
+     TEAM PAGE
   ========================================================= */
 
-  const [teamUsername, setTeamUsername] =
-    useState("");
+  const [
+    teamPage,
+    setTeamPage
+  ] = useState(
+    "dashboard"
+  );
 
-  const [teamPassword, setTeamPassword] =
-    useState("");
 
-  const [teamError, setTeamError] =
-    useState("");
+  /* =========================================================
+     ADMIN LOGIN
+  ========================================================= */
+
+  const [
+    adminUsername,
+    setAdminUsername
+  ] = useState("");
+
+  const [
+    adminPassword,
+    setAdminPassword
+  ] = useState("");
+
+  const [
+    adminError,
+    setAdminError
+  ] = useState("");
+
+  const [
+    adminLoading,
+    setAdminLoading
+  ] = useState(false);
+
+
+  /* =========================================================
+     TEAM LOGIN
+  ========================================================= */
+
+  const [
+    teamUsername,
+    setTeamUsername
+  ] = useState("");
+
+  const [
+    teamPassword,
+    setTeamPassword
+  ] = useState("");
+
+  const [
+    teamError,
+    setTeamError
+  ] = useState("");
+
+  const [
+    teamLoading,
+    setTeamLoading
+  ] = useState(false);
+
 
   /* =========================================================
      ADMIN LOGIN
@@ -57,15 +117,19 @@ function App() {
       setAdminError("");
 
       if (
-        !adminUsername ||
+        !adminUsername.trim() ||
         !adminPassword
       ) {
         setAdminError(
-          "Please enter username and password"
+          "Please enter username and password."
         );
 
         return;
       }
+
+      setAdminLoading(
+        true
+      );
 
       try {
         const response =
@@ -83,7 +147,7 @@ function App() {
               body:
                 JSON.stringify({
                   username:
-                    adminUsername,
+                    adminUsername.trim(),
 
                   password:
                     adminPassword
@@ -91,19 +155,41 @@ function App() {
             }
           );
 
-        const data =
-          await response.json();
+        const text =
+          await response.text();
+
+        let data;
+
+        try {
+          data =
+            JSON.parse(
+              text
+            );
+        } catch {
+          data = {
+            message:
+              text ||
+              "Server returned an invalid response."
+          };
+        }
 
         if (!response.ok) {
           setAdminError(
             data.message ||
-              "Invalid admin login"
+            "Invalid admin username or password."
           );
 
           return;
         }
 
-        setAdminLoggedIn(true);
+        setAdminLoggedIn(
+          true
+        );
+
+        setLoginType(
+          null
+        );
+
       } catch (error) {
         console.error(
           "Admin login error:",
@@ -111,10 +197,16 @@ function App() {
         );
 
         setAdminError(
-          "Unable to connect to the server"
+          "Unable to connect to the server."
+        );
+
+      } finally {
+        setAdminLoading(
+          false
         );
       }
     };
+
 
   /* =========================================================
      TEAM LOGIN
@@ -125,15 +217,19 @@ function App() {
       setTeamError("");
 
       if (
-        !teamUsername ||
+        !teamUsername.trim() ||
         !teamPassword
       ) {
         setTeamError(
-          "Please enter username and password"
+          "Please enter username and password."
         );
 
         return;
       }
+
+      setTeamLoading(
+        true
+      );
 
       try {
         const response =
@@ -173,26 +269,33 @@ function App() {
           data = {
             message:
               text ||
-              "Server returned an invalid response"
+              "Server returned an invalid response."
           };
         }
 
         if (!response.ok) {
           setTeamError(
             data.message ||
-              `Login failed (${response.status})`
+            `Login failed (${response.status}).`
           );
 
           return;
         }
 
+        /*
+          Your backend should return:
+
+          {
+            role: "team",
+            teamId: "..."
+          }
+        */
+
         if (
-          !data.teamId ||
-          data.role !==
-            "team"
+          !data.teamId
         ) {
           setTeamError(
-            "Login succeeded, but no valid team account was returned."
+            "Login succeeded, but no team account was returned."
           );
 
           return;
@@ -204,11 +307,6 @@ function App() {
           )
         );
 
-        /*
-          Always start at the
-          Team Dashboard after login.
-        */
-
         setTeamPage(
           "dashboard"
         );
@@ -216,6 +314,11 @@ function App() {
         setTeamLoggedIn(
           true
         );
+
+        setLoginType(
+          null
+        );
+
       } catch (error) {
         console.error(
           "Team login error:",
@@ -225,11 +328,17 @@ function App() {
         setTeamError(
           `Unable to connect to the server: ${error.message}`
         );
+
+      } finally {
+        setTeamLoading(
+          false
+        );
       }
     };
 
+
   /* =========================================================
-     LOGOUT
+     ADMIN LOGOUT
   ========================================================= */
 
   const handleAdminLogout =
@@ -238,11 +347,27 @@ function App() {
         false
       );
 
-      setAdminUsername("");
-      setAdminPassword("");
-      setAdminError("");
-      setLoginType(null);
+      setAdminUsername(
+        ""
+      );
+
+      setAdminPassword(
+        ""
+      );
+
+      setAdminError(
+        ""
+      );
+
+      setLoginType(
+        null
+      );
     };
+
+
+  /* =========================================================
+     TEAM LOGOUT
+  ========================================================= */
 
   const handleTeamLogout =
     () => {
@@ -254,15 +379,27 @@ function App() {
         ""
       );
 
-      setTeamUsername("");
-      setTeamPassword("");
-      setTeamError("");
+      setTeamUsername(
+        ""
+      );
+
+      setTeamPassword(
+        ""
+      );
+
+      setTeamError(
+        ""
+      );
+
       setTeamPage(
         "dashboard"
       );
 
-      setLoginType(null);
+      setLoginType(
+        null
+      );
     };
+
 
   /* =========================================================
      ADMIN DASHBOARD
@@ -280,6 +417,21 @@ function App() {
     );
   }
 
+
+  /* =========================================================
+     PRESENTATION PORTAL
+  ========================================================= */
+
+  if (
+    loginType ===
+    "presentation"
+  ) {
+    return (
+      <Presentation />
+    );
+  }
+
+
   /* =========================================================
      TEAM PORTAL
   ========================================================= */
@@ -290,13 +442,14 @@ function App() {
     return (
       <div className="team-portal">
 
-        {/* =================================================
-            TEAM NAVIGATION
-        ================================================= */}
+        {/* ===================================================
+            TOP NAVIGATION
+        =================================================== */}
 
         <header className="team-portal-nav">
 
           <div className="team-portal-brand">
+
             <strong>
               BEYOND XI
             </strong>
@@ -304,11 +457,14 @@ function App() {
             <span>
               TEAM PORTAL
             </span>
+
           </div>
+
 
           <nav className="team-portal-menu">
 
             <button
+              type="button"
               className={
                 teamPage ===
                 "dashboard"
@@ -324,7 +480,9 @@ function App() {
               Dashboard
             </button>
 
+
             <button
+              type="button"
               className={
                 teamPage ===
                 "best-xi"
@@ -340,7 +498,9 @@ function App() {
               Best XI
             </button>
 
+
             <button
+              type="button"
               className={
                 teamPage ===
                 "trade"
@@ -360,9 +520,10 @@ function App() {
 
         </header>
 
-        {/* =================================================
-            TEAM CONTENT
-        ================================================= */}
+
+        {/* ===================================================
+            PAGE CONTENT
+        =================================================== */}
 
         <main className="team-portal-content">
 
@@ -378,6 +539,7 @@ function App() {
             />
           )}
 
+
           {teamPage ===
             "best-xi" && (
             <BestXI
@@ -387,28 +549,14 @@ function App() {
             />
           )}
 
+
           {teamPage ===
             "trade" && (
-            <section className="team-coming-soon">
-
-              <div className="team-coming-soon-card">
-
-                <p>
-                  TEAM MARKET
-                </p>
-
-                <h1>
-                  Trade
-                </h1>
-
-                <span>
-                  The trade window will be
-                  available when the admin opens it.
-                </span>
-
-              </div>
-
-            </section>
+            <Trade
+              teamId={
+                loggedInTeamId
+              }
+            />
           )}
 
         </main>
@@ -416,6 +564,7 @@ function App() {
       </div>
     );
   }
+
 
   /* =========================================================
      ADMIN LOGIN
@@ -441,18 +590,24 @@ function App() {
               control panel
             </p>
 
+
             <input
               type="text"
               placeholder="Admin Username"
               value={
                 adminUsername
               }
-              onChange={(e) =>
+              onChange={(event) =>
                 setAdminUsername(
-                  e.target.value
+                  event.target.value
                 )
               }
+              autoFocus
+              disabled={
+                adminLoading
+              }
             />
+
 
             <input
               type="password"
@@ -460,61 +615,74 @@ function App() {
               value={
                 adminPassword
               }
-              onChange={(e) =>
+              onChange={(event) =>
                 setAdminPassword(
-                  e.target.value
+                  event.target.value
                 )
               }
-              onKeyDown={(e) => {
+              onKeyDown={(event) => {
                 if (
-                  e.key ===
-                  "Enter"
+                  event.key ===
+                  "Enter" &&
+                  !adminLoading
                 ) {
                   handleAdminLogin();
                 }
               }}
+              disabled={
+                adminLoading
+              }
             />
 
+
             {adminError && (
-              <p
-                style={{
-                  color:
-                    "#ff7777",
-
-                  fontSize:
-                    "13px",
-
-                  marginBottom:
-                    "12px",
-
-                  textAlign:
-                    "center"
-                }}
-              >
+              <p className="login-error">
                 {adminError}
               </p>
             )}
 
+
             <button
+              type="button"
               className="primary-button"
               onClick={
                 handleAdminLogin
               }
+              disabled={
+                adminLoading
+              }
             >
-              LOGIN
+              {
+                adminLoading
+                  ? "LOGGING IN..."
+                  : "LOGIN"
+              }
             </button>
 
+
             <button
+              type="button"
               className="back-button"
               onClick={() => {
                 setLoginType(
                   null
                 );
 
+                setAdminUsername(
+                  ""
+                );
+
+                setAdminPassword(
+                  ""
+                );
+
                 setAdminError(
                   ""
                 );
               }}
+              disabled={
+                adminLoading
+              }
             >
               ← Back
             </button>
@@ -526,6 +694,7 @@ function App() {
       </div>
     );
   }
+
 
   /* =========================================================
      TEAM LOGIN
@@ -551,19 +720,24 @@ function App() {
               credentials
             </p>
 
+
             <input
               type="text"
               placeholder="Team Username"
               value={
                 teamUsername
               }
-              onChange={(e) =>
+              onChange={(event) =>
                 setTeamUsername(
-                  e.target.value
+                  event.target.value
                 )
               }
               autoFocus
+              disabled={
+                teamLoading
+              }
             />
+
 
             <input
               type="password"
@@ -571,51 +745,53 @@ function App() {
               value={
                 teamPassword
               }
-              onChange={(e) =>
+              onChange={(event) =>
                 setTeamPassword(
-                  e.target.value
+                  event.target.value
                 )
               }
-              onKeyDown={(e) => {
+              onKeyDown={(event) => {
                 if (
-                  e.key ===
-                  "Enter"
+                  event.key ===
+                  "Enter" &&
+                  !teamLoading
                 ) {
                   handleTeamLogin();
                 }
               }}
+              disabled={
+                teamLoading
+              }
             />
 
+
             {teamError && (
-              <p
-                style={{
-                  color:
-                    "#ff7777",
-
-                  fontSize:
-                    "13px",
-
-                  marginBottom:
-                    "12px",
-
-                  textAlign:
-                    "center"
-                }}
-              >
+              <p className="login-error">
                 {teamError}
               </p>
             )}
 
+
             <button
+              type="button"
               className="primary-button"
               onClick={
                 handleTeamLogin
               }
+              disabled={
+                teamLoading
+              }
             >
-              LOGIN
+              {
+                teamLoading
+                  ? "LOGGING IN..."
+                  : "LOGIN"
+              }
             </button>
 
+
             <button
+              type="button"
               className="back-button"
               onClick={() => {
                 setLoginType(
@@ -634,6 +810,9 @@ function App() {
                   ""
                 );
               }}
+              disabled={
+                teamLoading
+              }
             >
               ← Back
             </button>
@@ -646,6 +825,7 @@ function App() {
     );
   }
 
+
   /* =========================================================
      MAIN LOGIN
   ========================================================= */
@@ -654,6 +834,10 @@ function App() {
     <div className="login-page">
 
       <div className="login-overlay">
+
+        {/* ===================================================
+            BRAND
+        =================================================== */}
 
         <div className="brand">
 
@@ -674,6 +858,11 @@ function App() {
 
         </div>
 
+
+        {/* ===================================================
+            LOGIN CARD
+        =================================================== */}
+
         <div className="login-card">
 
           <h2>
@@ -685,15 +874,52 @@ function App() {
             arena
           </p>
 
+
           <div className="login-options">
 
+            {/* =================================================
+                PRESENTATION
+            ================================================= */}
+
             <button
+              type="button"
+              className="login-option presentation"
+              onClick={() => {
+                setLoginType(
+                  "presentation"
+                );
+              }}
+            >
+              <div>
+
+                <strong>
+                  Presentation
+                </strong>
+
+                <small>
+                  Display the live auction
+                </small>
+
+              </div>
+            </button>
+
+
+            {/* =================================================
+                TEAM
+            ================================================= */}
+
+            <button
+              type="button"
               className="login-option team"
-              onClick={() =>
+              onClick={() => {
                 setLoginType(
                   "team"
-                )
-              }
+                );
+
+                setTeamError(
+                  ""
+                );
+              }}
             >
               <div>
 
@@ -709,13 +935,23 @@ function App() {
               </div>
             </button>
 
+
+            {/* =================================================
+                ADMIN
+            ================================================= */}
+
             <button
+              type="button"
               className="login-option admin"
-              onClick={() =>
+              onClick={() => {
                 setLoginType(
                   "admin"
-                )
-              }
+                );
+
+                setAdminError(
+                  ""
+                );
+              }}
             >
               <div>
 
@@ -735,6 +971,11 @@ function App() {
 
         </div>
 
+
+        {/* ===================================================
+            FOOTER
+        =================================================== */}
+
         <div className="footer-text">
           BEYOND XI • FIFA
           FOOTBALL AUCTION
@@ -745,5 +986,6 @@ function App() {
     </div>
   );
 }
+
 
 export default App;

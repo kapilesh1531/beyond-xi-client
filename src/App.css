@@ -1,16 +1,119 @@
+@import url("https://fonts.googleapis.com/css2?family=Rajdhani:wght@400;500;600;700&display=swap");
+
 /* =========================================================
-   APP ROOT
+   APP.CSS
+   BEYOND XI - MAIN APPLICATION STYLES
+   FOOTBALL STADIUM THEME
 ========================================================= */
 
+
+/* =========================================================
+   GLOBAL
+========================================================= */
+
+html,
+body,
 #root {
   width: 100%;
+  min-width: 100%;
+  min-height: 100%;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  background: #020609;
+}
+
+body {
   min-height: 100vh;
+
+  font-family:
+    Inter,
+    -apple-system,
+    BlinkMacSystemFont,
+    "Segoe UI",
+    Roboto,
+    Helvetica,
+    Arial,
+    sans-serif;
+
+  background:
+    linear-gradient(
+      rgba(2, 8, 12, 0.62),
+      rgba(2, 8, 12, 0.78)
+    ),
+    url("/images/football-bg.png");
+
+  background-size: cover;
+  background-position: center center;
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+
+  color: #eef4ef;
+}
+
+#root {
+  position: relative;
+  isolation: isolate;
+}
+
+#root::before {
+  content: "";
+
+  position: fixed;
+  inset: 0;
+
+  z-index: -2;
+
+  pointer-events: none;
+
+  background:
+    linear-gradient(
+      180deg,
+      rgba(0, 5, 10, 0.28) 0%,
+      rgba(0, 8, 12, 0.48) 48%,
+      rgba(0, 4, 7, 0.72) 100%
+    );
+
+  backdrop-filter: saturate(0.92);
+  -webkit-backdrop-filter: saturate(0.92);
 }
 
 .app {
   width: 100%;
   min-height: 100vh;
+
+  position: relative;
+
+  background: transparent;
+
+  color: #eef4ef;
 }
+
+
+/* =========================================================
+   SHARED GLASS EFFECT
+========================================================= */
+
+.glass-panel {
+  background:
+    linear-gradient(
+      135deg,
+      rgba(7, 14, 18, 0.82),
+      rgba(4, 11, 8, 0.72)
+    );
+
+  border:
+    1px solid rgba(120, 160, 135, 0.16);
+
+  box-shadow:
+    0 20px 60px rgba(0, 0, 0, 0.34);
+
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+}
+
 
 /* =========================================================
    TEAM PORTAL
@@ -19,9 +122,28 @@
 .team-portal {
   width: 100%;
   min-height: 100vh;
-  background: #050806;
+
+  position: relative;
+
+  background:
+    linear-gradient(
+      rgba(2, 8, 10, 0.42),
+      rgba(2, 8, 10, 0.58)
+    ),
+    url("/images/football-bg.png");
+
+  background-size: cover;
+  background-position: center center;
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+
   color: #eef4ef;
 }
+
+
+/* =========================================================
+   TEAM PORTAL NAVIGATION
+========================================================= */
 
 .team-portal-nav {
   position: sticky;
@@ -40,137 +162,250 @@
 
   gap: 30px;
 
-  background: rgba(5, 8, 6, 0.97);
-  border-bottom: 1px solid #1c2c23;
+  background:
+    linear-gradient(
+      180deg,
+      rgba(3, 8, 11, 0.94),
+      rgba(4, 10, 12, 0.86)
+    );
 
-  backdrop-filter: blur(14px);
-  -webkit-backdrop-filter: blur(14px);
+  border-bottom:
+    1px solid rgba(125, 165, 140, 0.14);
+
+  box-shadow:
+    0 12px 40px rgba(0, 0, 0, 0.28);
+
+  backdrop-filter: blur(18px);
+  -webkit-backdrop-filter: blur(18px);
 }
+
+
+/* =========================================================
+   TEAM BRAND
+========================================================= */
 
 .team-portal-brand {
   display: flex;
   align-items: center;
+
   gap: 13px;
+
   flex-shrink: 0;
 }
 
 .team-portal-brand strong {
   color: #51e276;
+
   font-size: 19px;
   font-weight: 900;
+
+  line-height: 1;
+
   letter-spacing: 0.5px;
+
+  text-shadow:
+    0 0 18px rgba(81, 226, 118, 0.16);
 }
 
 .team-portal-brand span {
   padding-left: 13px;
-  border-left: 1px solid #304138;
 
-  color: #6c7a72;
+  border-left:
+    1px solid rgba(120, 150, 132, 0.28);
+
+  color: #8e9c94;
 
   font-size: 10px;
   font-weight: 800;
+
+  line-height: 1;
+
   letter-spacing: 1.8px;
+
   white-space: nowrap;
 }
+
+
+/* =========================================================
+   TEAM MENU
+========================================================= */
 
 .team-portal-menu {
   display: flex;
   align-items: center;
+
   gap: 6px;
+
   margin-left: auto;
 }
 
 .team-portal-menu button {
+  appearance: none;
+
   height: 42px;
+
   padding: 0 18px;
 
-  border: 1px solid transparent;
+  border:
+    1px solid transparent;
+
   border-radius: 10px;
 
   background: transparent;
-  color: #7c8981;
+
+  color: #8a9890;
 
   font-size: 12px;
   font-weight: 800;
-  letter-spacing: 0.7px;
+
+  letter-spacing: 0.6px;
 
   cursor: pointer;
 
   transition:
     background 0.2s ease,
-    color 0.2s ease,
     border-color 0.2s ease,
-    transform 0.2s ease;
+    color 0.2s ease,
+    transform 0.2s ease,
+    box-shadow 0.2s ease;
 }
 
 .team-portal-menu button:hover {
-  background: #0b1510;
-  border-color: #20362a;
+  background:
+    rgba(11, 24, 16, 0.72);
+
+  border-color:
+    rgba(80, 130, 96, 0.34);
+
   color: #edf4ef;
-  transform: translateY(-1px);
+
+  transform:
+    translateY(-1px);
+
+  box-shadow:
+    0 8px 24px
+    rgba(0, 0, 0, 0.18);
 }
 
 .team-portal-menu button.active {
-  background: #0d2115;
-  border-color: #2d6040;
+  background:
+    linear-gradient(
+      135deg,
+      rgba(13, 39, 24, 0.88),
+      rgba(8, 28, 17, 0.78)
+    );
+
+  border-color:
+    rgba(82, 181, 110, 0.48);
+
   color: #58e67b;
 
   box-shadow:
     inset 0 0 0 1px
-    rgba(88, 230, 123, 0.05);
+    rgba(88, 230, 123, 0.05),
+    0 8px 24px
+    rgba(0, 0, 0, 0.16);
+
+  text-shadow:
+    0 0 12px
+    rgba(88, 230, 123, 0.12);
 }
+
+.team-portal-menu button.active:hover {
+  background:
+    linear-gradient(
+      135deg,
+      rgba(15, 44, 27, 0.92),
+      rgba(9, 32, 19, 0.84)
+    );
+
+  color: #65ea84;
+}
+
+
+/* =========================================================
+   TEAM CONTENT
+========================================================= */
 
 .team-portal-content {
   width: 100%;
-  min-height: calc(100vh - 76px);
+
+  min-height:
+    calc(100vh - 76px);
+
+  position: relative;
+
+  background: transparent;
 }
 
+
 /* =========================================================
-   TRADE PLACEHOLDER
+   TRADE / COMING SOON
 ========================================================= */
 
 .team-coming-soon {
-  min-height: calc(100vh - 76px);
+  min-height:
+    calc(100vh - 76px);
 
   padding: 45px 34px;
 
   display: flex;
+
   align-items: flex-start;
+
   justify-content: center;
 
   background:
     radial-gradient(
       circle at 50% 0%,
-      rgba(40, 110, 60, 0.05),
-      transparent 40%
+      rgba(40, 130, 68, 0.15),
+      transparent 42%
+    ),
+    linear-gradient(
+      rgba(2, 7, 10, 0.20),
+      rgba(2, 7, 10, 0.30)
     );
 }
 
 .team-coming-soon-card {
   width: min(680px, 100%);
+
   margin-top: 70px;
 
   padding: 50px;
 
-  border: 1px solid #21362a;
+  box-sizing: border-box;
+
+  border:
+    1px solid rgba(95, 145, 110, 0.26);
+
   border-radius: 20px;
 
-  background: #09110d;
+  background:
+    linear-gradient(
+      145deg,
+      rgba(8, 20, 14, 0.88),
+      rgba(5, 14, 11, 0.78)
+    );
 
   text-align: center;
 
   box-shadow:
     0 25px 70px
-    rgba(0, 0, 0, 0.28);
+    rgba(0, 0, 0, 0.38);
+
+  backdrop-filter: blur(18px);
+  -webkit-backdrop-filter: blur(18px);
 }
 
 .team-coming-soon-card p {
   margin: 0 0 10px;
 
-  color: #6f7d74;
+  color: #87958d;
 
   font-size: 10px;
   font-weight: 800;
+
   letter-spacing: 2px;
 }
 
@@ -182,7 +417,13 @@
   font-size: 50px;
   font-weight: 900;
 
+  line-height: 1;
+
   letter-spacing: -2px;
+
+  text-shadow:
+    0 8px 30px
+    rgba(0, 0, 0, 0.28);
 }
 
 .team-coming-soon-card span {
@@ -192,11 +433,13 @@
 
   margin: 14px auto 0;
 
-  color: #69776e;
+  color: #7c8a82;
 
   font-size: 14px;
+
   line-height: 1.6;
 }
+
 
 /* =========================================================
    LOGIN PAGE
@@ -206,47 +449,75 @@
   width: 100%;
   min-height: 100vh;
 
+  position: relative;
+
   display: flex;
+
   align-items: center;
   justify-content: center;
-
-  position: relative;
 
   overflow: hidden;
 
   background:
+    linear-gradient(
+      rgba(2, 7, 10, 0.60),
+      rgba(2, 7, 10, 0.74)
+    ),
+    url("/images/football-bg.png");
+
+  background-size: cover;
+  background-position: center center;
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+}
+
+.login-page::before {
+  content: "";
+
+  position: absolute;
+
+  inset: 0;
+
+  pointer-events: none;
+
+  background:
     radial-gradient(
-      circle at 25% 15%,
-      rgba(55, 145, 80, 0.07),
+      circle at 50% 28%,
+      rgba(71, 188, 106, 0.10),
       transparent 30%
-    ),
-    radial-gradient(
-      circle at 80% 85%,
-      rgba(40, 100, 60, 0.05),
-      transparent 28%
-    ),
-    #050806;
+    );
+
+  z-index: 0;
 }
 
 .login-overlay {
   width: min(520px, 100%);
-  padding: 40px 24px;
+
+  padding:
+    40px 24px;
+
   box-sizing: border-box;
+
+  position: relative;
+
+  z-index: 1;
 }
 
+
 /* =========================================================
-   BRAND
+   LOGIN BRAND
 ========================================================= */
 
 .brand {
   margin-bottom: 32px;
+
   text-align: center;
 }
 
 .brand-small {
   margin-bottom: 7px;
 
-  color: #718078;
+  color: #8b9890;
 
   font-size: 10px;
   font-weight: 800;
@@ -260,21 +531,30 @@
   color: #f2f6f3;
 
   font-size: 58px;
-  line-height: 0.95;
 
   font-weight: 900;
 
+  line-height: 0.95;
+
   letter-spacing: -3px;
+
+  text-shadow:
+    0 12px 40px
+    rgba(0, 0, 0, 0.38);
 }
 
 .brand h1 span {
   color: #51e276;
+
+  text-shadow:
+    0 0 24px
+    rgba(81, 226, 118, 0.14);
 }
 
 .brand p {
   margin: 14px 0 0;
 
-  color: #6e7c73;
+  color: #8a9890;
 
   font-size: 11px;
   font-weight: 800;
@@ -282,21 +562,39 @@
   letter-spacing: 2px;
 }
 
+
 /* =========================================================
    LOGIN CARD
 ========================================================= */
 
 .login-card {
+  width: 100%;
+
   padding: 34px;
 
-  border: 1px solid #26372e;
+  box-sizing: border-box;
+
+  border:
+    1px solid rgba(125, 165, 140, 0.22);
+
   border-radius: 20px;
 
-  background: rgba(10, 17, 13, 0.96);
+  background:
+    linear-gradient(
+      145deg,
+      rgba(8, 17, 13, 0.90),
+      rgba(5, 12, 10, 0.84)
+    );
 
   box-shadow:
     0 30px 80px
-    rgba(0, 0, 0, 0.35);
+    rgba(0, 0, 0, 0.42);
+
+  backdrop-filter:
+    blur(20px);
+
+  -webkit-backdrop-filter:
+    blur(20px);
 }
 
 .login-card h2 {
@@ -306,6 +604,9 @@
 
   font-size: 31px;
   font-weight: 800;
+
+  line-height: 1.1;
+
   letter-spacing: -0.8px;
 
   text-align: center;
@@ -314,12 +615,13 @@
 .login-subtitle {
   margin: 0 0 24px;
 
-  color: #708078;
+  color: #819088;
 
   font-size: 14px;
 
   text-align: center;
 }
+
 
 /* =========================================================
    LOGIN INPUTS
@@ -327,73 +629,133 @@
 
 .login-card input {
   width: 100%;
+
   height: 52px;
 
   margin-bottom: 12px;
+
   padding: 0 15px;
 
   box-sizing: border-box;
 
-  border: 1px solid #293b31;
+  border:
+    1px solid rgba(105, 145, 117, 0.22);
+
   border-radius: 11px;
 
   outline: none;
 
-  background: #09110d;
+  background:
+    rgba(5, 13, 9, 0.82);
+
   color: #f0f5f2;
 
   font-size: 14px;
 
   transition:
     border-color 0.2s ease,
-    box-shadow 0.2s ease;
+    box-shadow 0.2s ease,
+    background 0.2s ease;
 }
 
 .login-card input::placeholder {
-  color: #56645c;
+  color: #617068;
+}
+
+.login-card input:hover {
+  background:
+    rgba(7, 17, 11, 0.88);
+
+  border-color:
+    rgba(111, 155, 125, 0.28);
 }
 
 .login-card input:focus {
-  border-color: #42cd68;
+  border-color:
+    #42cd68;
 
   box-shadow:
     0 0 0 3px
-    rgba(66, 205, 104, 0.08);
+    rgba(66, 205, 104, 0.09),
+    0 0 24px
+    rgba(66, 205, 104, 0.06);
+
+  background:
+    rgba(6, 16, 10, 0.94);
 }
 
+
 /* =========================================================
-   PRIMARY LOGIN BUTTON
+   PRIMARY BUTTON
 ========================================================= */
 
 .primary-button {
   width: 100%;
+
   height: 53px;
 
   border: none;
+
   border-radius: 11px;
 
-  background: #51e276;
+  background:
+    linear-gradient(
+      135deg,
+      #51e276,
+      #45ce69
+    );
+
   color: #061009;
 
   font-size: 12px;
+
   font-weight: 900;
+
   letter-spacing: 1px;
 
   cursor: pointer;
 
+  box-shadow:
+    0 10px 28px
+    rgba(47, 173, 79, 0.12);
+
   transition:
+    background 0.2s ease,
     transform 0.2s ease,
-    background 0.2s ease;
+    box-shadow 0.2s ease;
 }
 
 .primary-button:hover {
-  background: #65e985;
-  transform: translateY(-1px);
+  background:
+    linear-gradient(
+      135deg,
+      #65e985,
+      #51da76
+    );
+
+  transform:
+    translateY(-1px);
+
+  box-shadow:
+    0 12px 32px
+    rgba(81, 226, 118, 0.18);
 }
 
 .primary-button:active {
-  transform: translateY(0);
+  transform:
+    translateY(0);
 }
+
+.primary-button:disabled {
+  opacity: 0.4;
+
+  cursor: not-allowed;
+
+  transform: none;
+
+  box-shadow: none;
+}
+
 
 /* =========================================================
    BACK BUTTON
@@ -402,24 +764,66 @@
 .back-button {
   display: block;
 
-  margin: 16px auto 0;
+  margin:
+    16px auto 0;
+
+  padding: 0;
 
   border: none;
 
   background: transparent;
 
-  color: #748179;
+  color: #87948d;
 
   font-size: 13px;
 
   cursor: pointer;
 
-  transition: color 0.2s ease;
+  transition:
+    color 0.2s ease;
 }
 
 .back-button:hover {
   color: #dce5df;
 }
+
+
+/* =========================================================
+   LOGIN ERROR
+========================================================= */
+
+.login-error {
+  margin:
+    0 0 13px;
+
+  padding:
+    10px 12px;
+
+  border:
+    1px solid rgba(178, 73, 64, 0.52);
+
+  border-radius: 9px;
+
+  background:
+    rgba(58, 17, 15, 0.74);
+
+  color:
+    #ff8174;
+
+  font-size:
+    13px;
+
+  line-height:
+    1.45;
+
+  text-align:
+    center;
+
+  box-shadow:
+    0 8px 24px
+    rgba(0, 0, 0, 0.12);
+}
+
 
 /* =========================================================
    LOGIN OPTIONS
@@ -427,38 +831,81 @@
 
 .login-options {
   display: grid;
+
   gap: 11px;
 }
 
 .login-option {
   width: 100%;
+
   min-height: 78px;
 
-  padding: 16px 18px;
+  padding:
+    16px 18px;
 
   display: flex;
+
   align-items: center;
 
-  border: 1px solid #283a30;
+  border:
+    1px solid rgba(105, 145, 117, 0.22);
+
   border-radius: 13px;
 
-  background: #0b1510;
+  background:
+    linear-gradient(
+      135deg,
+      rgba(10, 24, 16, 0.76),
+      rgba(6, 16, 11, 0.70)
+    );
+
   color: #eef4ef;
 
-  text-align: left;
+  text-align:
+    left;
 
-  cursor: pointer;
+  cursor:
+    pointer;
+
+  box-shadow:
+    0 8px 28px
+    rgba(0, 0, 0, 0.13);
+
+  backdrop-filter:
+    blur(10px);
+
+  -webkit-backdrop-filter:
+    blur(10px);
 
   transition:
     border-color 0.2s ease,
     background 0.2s ease,
-    transform 0.2s ease;
+    transform 0.2s ease,
+    box-shadow 0.2s ease;
 }
 
 .login-option:hover {
-  border-color: #3c6349;
-  background: #0e1a13;
-  transform: translateY(-2px);
+  border-color:
+    rgba(91, 164, 111, 0.42);
+
+  background:
+    linear-gradient(
+      135deg,
+      rgba(13, 31, 20, 0.84),
+      rgba(7, 19, 12, 0.78)
+    );
+
+  transform:
+    translateY(-2px);
+
+  box-shadow:
+    0 14px 34px
+    rgba(0, 0, 0, 0.22);
+}
+
+.login-option:active {
+  transform:
+    translateY(0);
 }
 
 .login-option strong {
@@ -472,9 +919,11 @@
 .login-option small {
   display: block;
 
-  color: #68766d;
+  color: #7c8981;
 
   font-size: 11px;
+
+  line-height: 1.45;
 }
 
 .login-option.team strong {
@@ -485,6 +934,7 @@
   color: #dce5df;
 }
 
+
 /* =========================================================
    FOOTER
 ========================================================= */
@@ -492,7 +942,7 @@
 .footer-text {
   margin-top: 24px;
 
-  color: #4d5b53;
+  color: #66736c;
 
   font-size: 9px;
   font-weight: 800;
@@ -500,38 +950,120 @@
   letter-spacing: 1.7px;
 
   text-align: center;
+
+  text-shadow:
+    0 2px 12px
+    rgba(0, 0, 0, 0.38);
 }
+
 
 /* =========================================================
-   ERROR TEXT
+   ACCESSIBILITY / FOCUS
 ========================================================= */
 
-.login-card p[style*="ff7777"] {
-  padding: 10px 12px;
+button:focus-visible {
+  outline:
+    2px solid #55df76;
 
-  border: 1px solid #713632;
-  border-radius: 9px;
+  outline-offset:
+    2px;
 
-  background: #24100f;
+  box-shadow:
+    0 0 0 4px
+    rgba(85, 223, 118, 0.10);
 }
+
+input:focus-visible,
+select:focus-visible {
+  outline:
+    2px solid
+    rgba(85, 223, 118, 0.5);
+
+  outline-offset:
+    1px;
+}
+
+
+/* =========================================================
+   SCROLLBAR
+========================================================= */
+
+* {
+  scrollbar-width: thin;
+
+  scrollbar-color:
+    rgba(83, 130, 101, 0.65)
+    rgba(3, 9, 7, 0.35);
+}
+
+*::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+*::-webkit-scrollbar-track {
+  background:
+    rgba(3, 9, 7, 0.35);
+}
+
+*::-webkit-scrollbar-thumb {
+  border-radius: 10px;
+
+  background:
+    rgba(83, 130, 101, 0.65);
+}
+
+*::-webkit-scrollbar-thumb:hover {
+  background:
+    rgba(100, 160, 119, 0.78);
+}
+
 
 /* =========================================================
    RESPONSIVE
 ========================================================= */
 
 @media (max-width: 850px) {
+  body {
+    background-position:
+      center center;
+
+    background-attachment:
+      scroll;
+  }
+
+  .team-portal {
+    background-position:
+      center center;
+
+    background-attachment:
+      scroll;
+  }
+
+  .login-page {
+    background-position:
+      center center;
+
+    background-attachment:
+      scroll;
+  }
+
   .team-portal-nav {
     min-height: auto;
 
-    padding: 14px 18px;
+    padding:
+      14px 18px;
 
-    flex-direction: column;
+    flex-direction:
+      column;
 
-    gap: 13px;
+    gap:
+      13px;
   }
 
   .team-portal-brand {
-    justify-content: center;
+    justify-content:
+      center;
   }
 
   .team-portal-menu {
@@ -539,65 +1071,191 @@
 
     margin-left: 0;
 
-    justify-content: center;
+    justify-content:
+      center;
 
-    overflow-x: auto;
+    overflow-x:
+      auto;
+
+    scrollbar-width:
+      none;
+  }
+
+  .team-portal-menu::-webkit-scrollbar {
+    display: none;
   }
 
   .team-portal-menu button {
-    flex-shrink: 0;
+    flex-shrink:
+      0;
   }
 
   .team-portal-content {
     min-height:
       calc(100vh - 120px);
   }
-}
-
-@media (max-width: 560px) {
-  .team-portal-brand strong {
-    font-size: 16px;
-  }
-
-  .team-portal-brand span {
-    font-size: 8px;
-    letter-spacing: 1.2px;
-  }
-
-  .team-portal-menu {
-    gap: 3px;
-  }
-
-  .team-portal-menu button {
-    height: 38px;
-
-    padding: 0 12px;
-
-    font-size: 10px;
-  }
-
-  .login-overlay {
-    padding: 25px 16px;
-  }
-
-  .brand h1 {
-    font-size: 45px;
-  }
-
-  .login-card {
-    padding: 26px 20px;
-  }
 
   .team-coming-soon {
-    padding: 25px 16px;
+    min-height:
+      calc(100vh - 120px);
+
+    padding:
+      30px 16px;
   }
 
   .team-coming-soon-card {
-    margin-top: 35px;
-    padding: 36px 22px;
+    margin-top:
+      40px;
+
+    padding:
+      38px 24px;
+  }
+
+  .login-page {
+    min-height:
+      100vh;
+  }
+}
+
+
+@media (max-width: 600px) {
+  .team-portal-brand strong {
+    font-size:
+      16px;
+  }
+
+  .team-portal-brand span {
+    font-size:
+      8px;
+
+    letter-spacing:
+      1.2px;
+  }
+
+  .team-portal-menu {
+    gap:
+      3px;
+  }
+
+  .team-portal-menu button {
+    height:
+      38px;
+
+    padding:
+      0 12px;
+
+    font-size:
+      10px;
+  }
+
+  .login-overlay {
+    padding:
+      25px 16px;
+  }
+
+  .brand h1 {
+    font-size:
+      45px;
+  }
+
+  .login-card {
+    padding:
+      26px 20px;
   }
 
   .team-coming-soon-card h1 {
-    font-size: 42px;
+    font-size:
+      42px;
+  }
+}
+
+/* =========================================================
+   FINAL BEYOND XI VISUAL SYSTEM
+========================================================= */
+
+body,
+button,
+input,
+select,
+textarea {
+  font-family: "Rajdhani", "Trebuchet MS", Arial, sans-serif;
+}
+
+/* Keep stadium as the site-wide visual base */
+body,
+.team-portal,
+.login-page {
+  background-size: cover !important;
+  background-position: center center !important;
+  background-repeat: no-repeat !important;
+  background-attachment: fixed !important;
+}
+
+/* Premium typography */
+h1,
+h2,
+h3,
+h4,
+strong,
+button {
+  font-weight: 700;
+}
+
+.brand h1,
+.team-identity h1,
+.team-squad-header h2,
+.team-current-player-info h2,
+.admin-header h1 {
+  font-weight: 700 !important;
+  text-shadow:
+    0 4px 16px rgba(0, 0, 0, 0.92);
+}
+
+/* Team portal navigation */
+.team-portal-nav {
+  background:
+    rgba(3, 9, 12, 0.84) !important;
+
+  backdrop-filter:
+    blur(14px);
+
+  -webkit-backdrop-filter:
+    blur(14px);
+}
+
+/* Login card */
+.login-card,
+.team-coming-soon-card {
+  background:
+    linear-gradient(
+      145deg,
+      rgba(7, 20, 14, 0.90),
+      rgba(4, 12, 9, 0.82)
+    ) !important;
+
+  border:
+    1px solid rgba(120, 165, 135, 0.22) !important;
+
+  box-shadow:
+    0 25px 70px rgba(0, 0, 0, 0.40) !important;
+
+  backdrop-filter:
+    blur(16px);
+
+  -webkit-backdrop-filter:
+    blur(16px);
+}
+
+/* Buttons */
+.primary-button {
+  font-weight: 700 !important;
+  letter-spacing: 1px;
+}
+
+@media (max-width: 850px) {
+  body,
+  .team-portal,
+  .login-page {
+    background-attachment: scroll !important;
   }
 }

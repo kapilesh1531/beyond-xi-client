@@ -48,6 +48,28 @@ function AdminDashboard({
     useState("");
 
   /* =========================================================
+     TRADE SETTINGS
+  ========================================================= */
+
+  const [tradeStatus, setTradeStatus] =
+    useState({
+      status: "Closed",
+      durationMinutes: 10,
+      openedAt: null,
+      endsAt: null,
+      closedAt: null
+    });
+
+  const [tradeDuration, setTradeDuration] =
+    useState(10);
+
+  const [tradeLoading, setTradeLoading] =
+    useState(false);
+
+  const [tradeNow, setTradeNow] =
+    useState(Date.now());
+
+  /* =========================================================
      MODALS
   ========================================================= */
 
@@ -342,6 +364,7 @@ function AdminDashboard({
     fetchTeams();
     fetchPlayers();
     fetchClubs();
+    fetchTradeStatus();
   }, []);
 
   /* =========================================================
@@ -415,6 +438,21 @@ function AdminDashboard({
       handleAuctionUpdate
     );
 
+    const handleTradeUpdate =
+      (updatedTrade) => {
+        if (updatedTrade && typeof updatedTrade === "object") {
+          setTradeStatus((current) => ({
+            ...current,
+            ...updatedTrade
+          }));
+        }
+      };
+
+    socket.on(
+      "trade:update",
+      handleTradeUpdate
+    );
+
     return () => {
       socket.off(
         "teams:update",
@@ -429,6 +467,11 @@ function AdminDashboard({
       socket.off(
         "auction:update",
         handleAuctionUpdate
+      );
+
+      socket.off(
+        "trade:update",
+        handleTradeUpdate
       );
     };
   }, []);
@@ -1708,6 +1751,232 @@ function AdminDashboard({
         );
       }
     };
+
+  /* =========================================================
+     TRADE STATUS
+  ========================================================= */
+
+  const fetchTradeStatus = async () => {
+    try {
+      const response =
+        await fetch(
+          "http://localhost:5000/api/trade/status"
+        );
+
+      const data =
+        await response.json();
+
+      if (!response.ok) {
+        throw new Error(
+          data.message ||
+            "Failed to fetch trade status."
+        );
+      }
+
+      setTradeStatus(data);
+
+      if (data.durationMinutes) {
+        setTradeDuration(
+          data.durationMinutes
+        );
+      }
+    } catch (err) {
+      console.error(
+        "Fetch trade status error:",
+        err
+      );
+    }
+  };
+
+  /* =========================================================
+     TRADE TIMER
+  ========================================================= */
+
+  useEffect(() => {
+    const interval =
+      setInterval(() => {
+        setTradeNow(Date.now());
+
+        if (
+          tradeStatus?.status ===
+            "Open" &&
+          tradeStatus?.endsAt &&
+          Date.now() >=
+            new Date(
+              tradeStatus.endsAt
+            ).getTime()
+        ) {
+          fetchTradeStatus();
+        }
+      }, 1000);
+
+    return () =>
+      clearInterval(interval);
+  }, [
+    tradeStatus?.status,
+    tradeStatus?.endsAt
+  ]);
+
+  /* =========================================================
+     OPEN TRADE WINDOW
+  ========================================================= */
+
+  const openTradeWindow = async () => {
+    clearMessages();
+
+    const duration =
+      Number(tradeDuration);
+
+    if (
+      !Number.isFinite(duration) ||
+      duration < 1
+    ) {
+      setError(
+        "Trade duration must be at least 1 minute."
+      );
+      return;
+    }
+
+    setTradeLoading(true);
+
+    try {
+      const response =
+        await fetch(
+          "http://localhost:5000/api/trade/admin/open",
+          {
+            method: "POST",
+            headers: {
+              "Content-Type":
+                "application/json"
+            },
+            body: JSON.stringify({
+              durationMinutes: duration
+            })
+          }
+        );
+
+      const data =
+        await response.json();
+
+      if (!response.ok) {
+        throw new Error(
+          data.message ||
+            "Failed to open trade window."
+        );
+      }
+
+      setTradeStatus(data);
+
+      setMessage(
+        `Trade window opened for ${duration} minute${duration === 1 ? "" : "s"}.`
+      );
+    } catch (err) {
+      console.error(
+        "Open trade error:",
+        err
+      );
+
+      setError(
+        err.message ||
+          "Unable to connect to the server."
+      );
+    } finally {
+      setTradeLoading(false);
+    }
+  };
+
+  /* =========================================================
+     CLOSE TRADE WINDOW
+  ========================================================= */
+
+  const closeTradeWindow = async () => {
+    clearMessages();
+
+    const confirmed =
+      window.confirm(
+        "Close the trade window now? Pending trade requests will be cancelled."
+      );
+
+    if (!confirmed) {
+      return;
+    }
+
+    setTradeLoading(true);
+
+    try {
+      const response =
+        await fetch(
+          "http://localhost:5000/api/trade/admin/close",
+          {
+            method: "POST"
+          }
+        );
+
+      const data =
+        await response.json();
+
+      if (!response.ok) {
+        throw new Error(
+          data.message ||
+            "Failed to close trade window."
+        );
+      }
+
+      setTradeStatus(data);
+
+      setMessage(
+        "Trade window closed. Teams can now submit their final Best XI."
+      );
+    } catch (err) {
+      console.error(
+        "Close trade error:",
+        err
+      );
+
+      setError(
+        err.message ||
+          "Unable to connect to the server."
+      );
+    } finally {
+      setTradeLoading(false);
+    }
+  };
+
+  /* =========================================================
+     TRADE TIME REMAINING
+  ========================================================= */
+
+  const tradeRemainingSeconds =
+    tradeStatus?.status === "Open" &&
+    tradeStatus?.endsAt
+      ? Math.max(
+          0,
+          Math.floor(
+            (new Date(
+              tradeStatus.endsAt
+            ).getTime() -
+              tradeNow) /
+              1000
+          )
+        )
+      : 0;
+
+  const tradeRemainingMinutes =
+    Math.floor(
+      tradeRemainingSeconds /
+        60
+    );
+
+  const tradeRemainingSecondsOnly =
+    tradeRemainingSeconds %
+    60;
+
+  const tradeTimerText =
+    `${String(
+      tradeRemainingMinutes
+    ).padStart(2, "0")}:${String(
+      tradeRemainingSecondsOnly
+    ).padStart(2, "0")}`;
 
   /* =========================================================
      DASHBOARD SECTION
@@ -3161,6 +3430,165 @@ function AdminDashboard({
           </div>
 
         </header>
+
+        {/* =====================================================
+            TRADE MANAGEMENT
+        ===================================================== */}
+
+        <section className="settings-card trade-settings-card">
+
+          <div className="settings-card-header">
+
+            <div>
+
+              <p className="section-label">
+                TRADE MANAGEMENT
+              </p>
+
+              <h2>
+                Trade Window
+              </h2>
+
+            </div>
+
+            <span
+              className={`trade-admin-status ${
+                tradeStatus?.status ===
+                "Open"
+                  ? "open"
+                  : tradeStatus?.status ===
+                    "Ended"
+                  ? "ended"
+                  : "closed"
+              }`}
+            >
+              {tradeStatus?.status ||
+                "Closed"}
+            </span>
+
+          </div>
+
+          <p className="settings-description">
+            Open the player trading window for a custom duration.
+            Teams can exchange players only while this window is open.
+          </p>
+
+          <div className="trade-admin-grid">
+
+            <div className="trade-admin-field">
+
+              <label>
+                TRADE DURATION
+              </label>
+
+              <div className="trade-duration-control">
+
+                <input
+                  type="number"
+                  min="1"
+                  step="1"
+                  value={
+                    tradeDuration
+                  }
+                  disabled={
+                    tradeStatus?.status ===
+                    "Open"
+                  }
+                  onChange={(event) =>
+                    setTradeDuration(
+                      event.target.value
+                    )
+                  }
+                />
+
+                <span>
+                  minutes
+                </span>
+
+              </div>
+
+            </div>
+
+            {tradeStatus?.status ===
+            "Open" ? (
+
+              <div className="trade-admin-active">
+
+                <span>
+                  TIME REMAINING
+                </span>
+
+                <strong>
+                  {tradeTimerText}
+                </strong>
+
+              </div>
+
+            ) : (
+
+              <div className="trade-admin-active trade-admin-inactive">
+
+                <span>
+                  CURRENT STATE
+                </span>
+
+                <strong>
+                  {tradeStatus?.status ||
+                    "Closed"}
+                </strong>
+
+              </div>
+
+            )}
+
+          </div>
+
+          <div className="trade-admin-actions">
+
+            {tradeStatus?.status ===
+            "Open" ? (
+
+              <button
+                type="button"
+                className="danger-button"
+                onClick={
+                  closeTradeWindow
+                }
+                disabled={
+                  tradeLoading
+                }
+              >
+                {tradeLoading
+                  ? "CLOSING..."
+                  : "CLOSE TRADE WINDOW"}
+              </button>
+
+            ) : (
+
+              <button
+                type="button"
+                className="create-team-button"
+                onClick={
+                  openTradeWindow
+                }
+                disabled={
+                  tradeLoading
+                }
+              >
+                {tradeLoading
+                  ? "OPENING..."
+                  : "OPEN TRADE WINDOW"}
+              </button>
+
+            )}
+
+          </div>
+
+        </section>
+
+        {/* =====================================================
+            AUCTION RESET
+        ===================================================== */}
 
         <section className="settings-card">
 

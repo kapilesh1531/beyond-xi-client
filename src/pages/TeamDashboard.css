@@ -757,3 +757,96 @@
     min-width: 100px;
   }
 }
+
+
+/* =========================================================
+   FINAL BEYOND XI TEAM DASHBOARD VISUALS
+========================================================= */
+
+.team-dashboard,
+.team-dashboard * {
+  font-family: "Rajdhani", "Trebuchet MS", Arial, sans-serif;
+}
+
+.team-dashboard {
+  min-height: 100vh;
+
+  padding: 36px 45px 60px !important;
+
+  background:
+    linear-gradient(
+      rgba(2, 8, 11, 0.40),
+      rgba(2, 8, 11, 0.56)
+    ),
+    url("/images/football-bg.png") !important;
+
+  background-size: cover !important;
+  background-position: center center !important;
+  background-repeat: no-repeat !important;
+  background-attachment: fixed !important;
+}
+
+/* Main cards */
+.team-purse-card,
+.team-auction-status,
+.team-current-player-section,
+.team-squad-section {
+  background:
+    linear-gradient(
+      145deg,
+      rgba(5, 18, 11, 0.82),
+      rgba(3, 11, 8, 0.70)
+    ) !important;
+
+  border:
+    1px solid rgba(116, 160, 129, 0.24) !important;
+
+  box-shadow:
+    0 20px 60px rgba(0, 0, 0, 0.28),
+    inset 0 1px 0 rgba(255, 255, 255, 0.025) !important;
+
+  backdrop-filter:
+    blur(14px);
+
+  -webkit-backdrop-filter:
+    blur(14px);
+}
+
+/* Smaller cards */
+.team-current-player-price > div,
+.team-squad-finance > div,
+.position-summary-card,
+.team-player-tags span,
+.team-squad-player-card {
+  background:
+    rgba(7, 22, 13, 0.62) !important;
+
+  border-color:
+    rgba(105, 145, 117, 0.20) !important;
+}
+
+/* Strong typography */
+.team-identity h1,
+.team-current-player-info h2,
+.team-squad-header h2 {
+  font-weight:
+    700 !important;
+
+  text-shadow:
+    0 4px 16px rgba(0, 0, 0, 0.95);
+}
+
+.team-purse-card strong,
+.team-squad-finance strong,
+.position-summary-card strong {
+  font-weight:
+    700 !important;
+}
+
+/* Mobile */
+@media (max-width: 700px) {
+  .team-dashboard {
+    background-attachment:
+      scroll !important;
+  }
+}
