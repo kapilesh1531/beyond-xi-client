@@ -3,6 +3,8 @@ import {
   useState
 } from "react";
 
+const API_URL = import.meta.env.VITE_API_URL;
+
 import "./Results.css";
 
 function formatMoney(value) {
@@ -61,7 +63,7 @@ function Results() {
 
         const response =
           await fetch(
-            "http://localhost:5000/api/results"
+            `${API_URL}/api/results`
           );
 
         const result =
@@ -710,7 +712,7 @@ function Results() {
                                   "http"
                                 )
                                   ? player.image
-                                  : `http://localhost:5000${player.image}`
+                                  : `${API_URL}${player.image}`
                               }
                               alt={
                                 player.name

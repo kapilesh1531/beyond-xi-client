@@ -3,6 +3,8 @@ import {
   useState
 } from "react";
 
+const API_URL = import.meta.env.VITE_API_URL;
+
 import {
   io
 } from "socket.io-client";
@@ -13,7 +15,7 @@ import "./Presentation.css";
 
 
 const socket = io(
-  "http://localhost:5000",
+  API_URL,
   {
     autoConnect: true
   }
@@ -53,7 +55,7 @@ function Presentation() {
 
       const response =
         await fetch(
-          "http://localhost:5000/api/auction"
+          `${API_URL}/api/auction`
         );
 
       const data =
@@ -167,11 +169,11 @@ function Presentation() {
     if (
       image.startsWith("/")
     ) {
-      return `http://localhost:5000${image}`;
+      return `${API_URL}${image}`;
     }
 
     // Handle uploads/... without /
-    return `http://localhost:5000/${image}`;
+    return `${API_URL}/${image}`;
 
   };
 

@@ -1,7 +1,7 @@
 import {
   useState
 } from "react";
-
+const API_URL = import.meta.env.VITE_API_URL;
 import "./index.css";
 
 import AdminDashboard
@@ -134,7 +134,7 @@ function App() {
       try {
         const response =
           await fetch(
-            "http://localhost:5000/api/auth/admin-login",
+            `${API_URL}/api/auth/admin-login`,
             {
               method:
                 "POST",
@@ -234,7 +234,7 @@ function App() {
       try {
         const response =
           await fetch(
-            "http://localhost:5000/api/auth/team-login",
+            `${API_URL}/api/auth/team-login`,
             {
               method:
                 "POST",

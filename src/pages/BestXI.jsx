@@ -5,7 +5,7 @@ import {
 } from "react";
 
 import "./BestXI.css";
-
+const API_URL = import.meta.env.VITE_API_URL;
 
 const FORMATIONS = [
   {
@@ -152,7 +152,7 @@ function BestXI({
       return image;
     }
 
-    return `http://localhost:5000${image}`;
+    return `${API_URL}${image}`;
   };
 
 
@@ -177,7 +177,7 @@ function BestXI({
 
       const response =
         await fetch(
-          `http://localhost:5000/api/teams/${teamId}/best-xi`
+          `${API_URL}/api/teams/${teamId}/best-xi`
         );
 
       const data =
@@ -296,7 +296,7 @@ function BestXI({
 
         const response =
           await fetch(
-            "http://localhost:5000/api/trade/status"
+            `${API_URL}/api/trade/status`
           );
 
         const data =
@@ -624,7 +624,7 @@ function BestXI({
 
         const response =
           await fetch(
-            `http://localhost:5000/api/teams/${teamId}/best-xi`,
+            `${API_URL}/api/teams/${teamId}/best-xi`,
             {
               method: "PUT",
 
@@ -733,7 +733,7 @@ function BestXI({
 
         const response =
           await fetch(
-            `http://localhost:5000/api/teams/${teamId}/best-xi/submit`,
+            `${API_URL}/api/teams/${teamId}/best-xi/submit`,
             {
               method: "POST",
 

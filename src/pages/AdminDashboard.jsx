@@ -3,6 +3,7 @@ import {
   useRef,
   useState
 } from "react";
+const API_URL = import.meta.env.VITE_API_URL;
 
 import { io } from "socket.io-client";
 
@@ -11,7 +12,7 @@ import LiveAuction from "./LiveAuction";
 import "./AdminDashboard.css";
 
 const socket = io(
-  "http://localhost:5000",
+  API_URL,
   {
     autoConnect: true
   }
@@ -244,7 +245,7 @@ function AdminDashboard({
     try {
       const response =
         await fetch(
-          "http://localhost:5000/api/admin/teams"
+          `${API_URL}/api/admin/teams`
         );
 
       const data =
@@ -284,7 +285,7 @@ function AdminDashboard({
     try {
       const response =
         await fetch(
-          "http://localhost:5000/api/players"
+          `${API_URL}/api/players`
         );
 
       const data =
@@ -324,7 +325,7 @@ function AdminDashboard({
     try {
       const response =
         await fetch(
-          "http://localhost:5000/api/clubs"
+          `${API_URL}/api/clubs`
         );
 
       const data =
@@ -501,7 +502,7 @@ function AdminDashboard({
       try {
         const response =
           await fetch(
-            "http://localhost:5000/api/teams/add",
+            `${API_URL}/api/teams/add`,
             {
               method:
                 "POST",
@@ -581,7 +582,7 @@ function AdminDashboard({
       try {
         const response =
           await fetch(
-            `http://localhost:5000/api/admin/teams/${teamId}`,
+            `${API_URL}/api/admin/teams/${teamId}`,
             {
               method:
                 "DELETE"
@@ -641,7 +642,7 @@ function AdminDashboard({
       try {
         const response =
           await fetch(
-            "http://localhost:5000/api/clubs/add",
+            `${API_URL}/api/clubs/add`,
             {
               method:
                 "POST",
@@ -720,7 +721,7 @@ function AdminDashboard({
       try {
         const response =
           await fetch(
-            `http://localhost:5000/api/clubs/${clubId}`,
+            `${API_URL}/api/clubs/${clubId}`,
             {
               method:
                 "DELETE"
@@ -879,7 +880,7 @@ function AdminDashboard({
       try {
         const response =
           await fetch(
-            "http://localhost:5000/api/players/add",
+            `${API_URL}/api/players/add`,
             {
               method:
                 "POST",
@@ -999,7 +1000,7 @@ function AdminDashboard({
       try {
         const response =
           await fetch(
-            "http://localhost:5000/api/players/delete-selected",
+            `${API_URL}/api/players/delete-selected`,
             {
               method:
                 "POST",
@@ -1066,7 +1067,7 @@ function AdminDashboard({
       try {
         const response =
           await fetch(
-            "http://localhost:5000/api/players/all/clear",
+            `${API_URL}/api/players/all/clear`,
             {
               method:
                 "DELETE"
@@ -1235,7 +1236,7 @@ function AdminDashboard({
 
         const response =
           await fetch(
-            "http://localhost:5000/api/clubs/import/preview",
+            `${API_URL}/api/clubs/import/preview`,
             {
               method:
                 "POST",
@@ -1328,7 +1329,7 @@ function AdminDashboard({
 
         const response =
           await fetch(
-            "http://localhost:5000/api/clubs/import",
+            `${API_URL}/api/clubs/import`,
             {
               method:
                 "POST",
@@ -1535,7 +1536,7 @@ function AdminDashboard({
 
         const response =
           await fetch(
-            "http://localhost:5000/api/players/import/preview",
+            `${API_URL}/api/players/import/preview`,
             {
               method:
                 "POST",
@@ -1620,7 +1621,7 @@ function AdminDashboard({
 
         const response =
           await fetch(
-            "http://localhost:5000/api/players/import",
+            `${API_URL}/api/players/import`,
             {
               method:
                 "POST",
@@ -1714,7 +1715,7 @@ function AdminDashboard({
       try {
         const response =
           await fetch(
-            "http://localhost:5000/api/reset/auction",
+            `${API_URL}/api/reset/auction`,
             {
               method:
                 "POST"
@@ -1760,7 +1761,7 @@ function AdminDashboard({
     try {
       const response =
         await fetch(
-          "http://localhost:5000/api/trade/status"
+            `${API_URL}/api/trade/status`
         );
 
       const data =
@@ -1842,7 +1843,7 @@ function AdminDashboard({
     try {
       const response =
         await fetch(
-          "http://localhost:5000/api/trade/admin/open",
+            `${API_URL}/api/trade/admin/open`,
           {
             method: "POST",
             headers: {
@@ -1906,7 +1907,7 @@ function AdminDashboard({
     try {
       const response =
         await fetch(
-          "http://localhost:5000/api/trade/admin/close",
+            `${API_URL}/api/trade/admin/close`,
           {
             method: "POST"
           }
@@ -3160,7 +3161,7 @@ function AdminDashboard({
                                   "http"
                                 )
                                   ? team.club.logo
-                                  : `http://localhost:5000${team.club.logo}`
+                                  : `${API_URL}${team.club.logo}`
                               }
                               alt={
                                 team.club.name
@@ -3341,7 +3342,7 @@ function AdminDashboard({
                                         "http"
                                       )
                                         ? player.image
-                                        : `http://localhost:5000${player.image}`
+                                        : `${API_URL}${player.image}`
                                     }
                                     alt={
                                       player.name

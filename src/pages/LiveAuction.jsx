@@ -2,12 +2,13 @@ import {
   useEffect,
   useState
 } from "react";
+const API_URL = import.meta.env.VITE_API_URL;
 
 import { io } from "socket.io-client";
 import "./LiveAuction.css";
 
 const socket = io(
-  "http://localhost:5000",
+  API_URL,
   {
     autoConnect: true
   }
@@ -46,7 +47,7 @@ function LiveAuction() {
     try {
       const response =
         await fetch(
-          "http://localhost:5000/api/auction"
+          `${API_URL}/api/auction`
         );
 
       const data =
@@ -92,7 +93,7 @@ function LiveAuction() {
     try {
       const response =
         await fetch(
-          "http://localhost:5000/api/admin/teams"
+          `${API_URL}/api/admin/teams`
         );
 
       const data =
@@ -204,7 +205,7 @@ function LiveAuction() {
     try {
       const response =
         await fetch(
-          "http://localhost:5000/api/auction/start",
+          `${API_URL}/api/auction/start`,
           {
             method:
               "POST"
@@ -259,7 +260,7 @@ function LiveAuction() {
     try {
       const response =
         await fetch(
-          "http://localhost:5000/api/auction/pause",
+          `${API_URL}/api/auction/pause`,
           {
             method:
               "POST"
@@ -311,7 +312,7 @@ function LiveAuction() {
     try {
       const response =
         await fetch(
-          "http://localhost:5000/api/auction/resume",
+          `${API_URL}/api/auction/resume`,
           {
             method:
               "POST"
@@ -483,7 +484,7 @@ function LiveAuction() {
     try {
       const response =
         await fetch(
-          "http://localhost:5000/api/auction/manual-sell",
+          `${API_URL}/api/auction/manual-sell`,
           {
             method:
               "POST",
@@ -582,7 +583,7 @@ function LiveAuction() {
     try {
       const response =
         await fetch(
-          "http://localhost:5000/api/auction/unsold",
+          `${API_URL}/api/auction/unsold`,
           {
             method:
               "POST"
@@ -637,7 +638,7 @@ function LiveAuction() {
     try {
       const response =
         await fetch(
-          "http://localhost:5000/api/auction/next",
+          `${API_URL}/api/auction/next`,
           {
             method:
               "POST"
@@ -912,7 +913,7 @@ function LiveAuction() {
                         "http"
                       )
                         ? currentPlayer.image
-                        : `http://localhost:5000${currentPlayer.image}`
+                        : `${API_URL}${currentPlayer.image}`
                     }
                     alt={
                       currentPlayer.name

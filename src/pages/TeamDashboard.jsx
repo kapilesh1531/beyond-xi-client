@@ -3,12 +3,14 @@ import {
   useState
 } from "react";
 
+const API_URL = import.meta.env.VITE_API_URL;
+
 import { io } from "socket.io-client";
 
 import "./TeamDashboard.css";
 
 const socket = io(
-  "http://localhost:5000",
+  API_URL,
   {
     autoConnect: true
   }
@@ -47,7 +49,7 @@ function TeamDashboard({
     try {
       const response =
         await fetch(
-          `http://localhost:5000/api/admin/teams/${teamId}`
+          `${API_URL}/api/admin/teams/${teamId}`
         );
 
       const data =
@@ -84,7 +86,7 @@ function TeamDashboard({
     try {
       const response =
         await fetch(
-          "http://localhost:5000/api/auction"
+          `${API_URL}/api/auction`
         );
 
       const data =
@@ -240,7 +242,7 @@ function TeamDashboard({
       return image;
     }
 
-    return `http://localhost:5000${image}`;
+    return `${API_URL}${image}`;
   };
 
   /* =========================================================

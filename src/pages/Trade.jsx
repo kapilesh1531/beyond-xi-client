@@ -4,12 +4,14 @@ import {
   useState
 } from "react";
 
+const API_URL = import.meta.env.VITE_API_URL;
+
 import { io } from "socket.io-client";
 
 import "./Trade.css";
 
 const socket = io(
-  "http://localhost:5000",
+  API_URL,
   {
     autoConnect: true
   }
@@ -80,7 +82,7 @@ function Trade({ teamId }) {
 
     try {
       const response = await fetch(
-        `http://localhost:5000/api/teams/${teamId}`
+        `${API_URL}/api/teams/${teamId}`
       );
 
       const data = await response.json();
@@ -113,7 +115,7 @@ function Trade({ teamId }) {
   const fetchTradeStatus = async () => {
     try {
       const response = await fetch(
-        "http://localhost:5000/api/trade/status"
+        `${API_URL}/api/trade/status`
       );
 
       const data = await response.json();
@@ -145,7 +147,7 @@ function Trade({ teamId }) {
 
     try {
       const response = await fetch(
-        `http://localhost:5000/api/trade/teams/${teamId}/options`
+        `${API_URL}/api/trade/teams/${teamId}/options`
       );
 
       const data = await response.json();
@@ -181,7 +183,7 @@ function Trade({ teamId }) {
 
     try {
       const response = await fetch(
-        `http://localhost:5000/api/trade/requests/${teamId}`
+        `${API_URL}/api/trade/requests/${teamId}`
       );
 
       const data = await response.json();
@@ -644,7 +646,7 @@ function Trade({ teamId }) {
       try {
         const response =
           await fetch(
-            "http://localhost:5000/api/trade/request",
+            `${API_URL}/api/trade/request`,
             {
               method:
                 "POST",
@@ -740,7 +742,7 @@ function Trade({ teamId }) {
       try {
         const response =
           await fetch(
-            `http://localhost:5000/api/trade/request/${requestId}/accept`,
+            `${API_URL}/api/trade/request/${requestId}/accept`,
             {
               method:
                 "POST"
@@ -825,7 +827,7 @@ function Trade({ teamId }) {
       try {
         const response =
           await fetch(
-            `http://localhost:5000/api/trade/request/${requestId}/reject`,
+            `${API_URL}/api/trade/request/${requestId}/reject`,
             {
               method:
                 "POST"
@@ -872,7 +874,7 @@ function Trade({ teamId }) {
       try {
         const response =
           await fetch(
-            `http://localhost:5000/api/trade/request/${requestId}/cancel`,
+            `${API_URL}/api/trade/request/${requestId}/cancel`,
             {
               method:
                 "POST"
