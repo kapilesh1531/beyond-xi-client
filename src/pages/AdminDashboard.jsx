@@ -99,9 +99,6 @@ function AdminDashboard({
   const [teamClubId, setTeamClubId] =
     useState("");
 
-  const [teamUsername, setTeamUsername] =
-    useState("");
-
   const [teamPassword, setTeamPassword] =
     useState("");
 
@@ -215,7 +212,6 @@ function AdminDashboard({
 
   const resetTeamForm = () => {
     setTeamClubId("");
-    setTeamUsername("");
     setTeamPassword("");
   };
 
@@ -487,17 +483,23 @@ function AdminDashboard({
 
       clearMessages();
 
+      const selectedClub =
+        clubs.find(
+          (club) => club._id === teamClubId
+        );
+
       if (
-        !teamClubId ||
-        !teamUsername.trim() ||
+        !selectedClub ||
         !teamPassword
       ) {
         setError(
-          "Please select a club and enter username and password."
+          "Please select a club and enter a password."
         );
 
         return;
       }
+
+      const username = selectedClub.name;
 
       try {
         const response =
@@ -517,8 +519,7 @@ function AdminDashboard({
                   clubId:
                     teamClubId,
 
-                  username:
-                    teamUsername.trim(),
+                  username,
 
                   password:
                     teamPassword
@@ -3955,24 +3956,6 @@ function AdminDashboard({
                     )}
 
                 </select>
-
-              </label>
-
-              <label>
-                Username
-
-                <input
-                  type="text"
-                  value={
-                    teamUsername
-                  }
-                  onChange={(event) =>
-                    setTeamUsername(
-                      event.target.value
-                    )
-                  }
-                  placeholder="Team username"
-                />
 
               </label>
 
