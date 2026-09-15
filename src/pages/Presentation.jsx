@@ -351,7 +351,7 @@ function Presentation() {
               <div className="presentation-empty">
 
                 <div className="empty-icon">
-                  ⚽
+                  <span className="material-symbols-outlined" style={{ fontSize: "64px" }}>sports_soccer</span>
                 </div>
 
                 <h2>

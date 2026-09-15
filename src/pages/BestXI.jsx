@@ -1149,7 +1149,7 @@ function BestXI({
                       ) : (
 
                         <div className="draft-no-image">
-                          ⚽
+                          <span className="material-symbols-outlined">sports_soccer</span>
                         </div>
 
                       )}
@@ -1197,9 +1197,9 @@ function BestXI({
 
 
                     <div className="draft-check">
-                      {isSelected
-                        ? "✓"
-                        : "+"}
+                      <span className="material-symbols-outlined">
+                        {isSelected ? "check" : "add"}
+                      </span>
                     </div>
 
                   </button>
@@ -1224,8 +1224,8 @@ function BestXI({
 
           {!formationValid && (
             <div>
-              ⚠ Formation must contain exactly
-              11 players.
+              <span className="material-symbols-outlined" style={{ fontSize: "18px", marginRight: "6px" }}>warning</span>
+              Formation must contain exactly 11 players.
             </div>
           )}
 
@@ -1256,8 +1256,8 @@ function BestXI({
             !positionsValid && (
 
               <div>
-                ⚠ Selected players do not match
-                your chosen formation.
+                <span className="material-symbols-outlined" style={{ fontSize: "18px", marginRight: "6px" }}>warning</span>
+                Selected players do not match your chosen formation.
               </div>
 
             )}
@@ -1266,7 +1266,8 @@ function BestXI({
           {ready && (
 
             <div className="validation-good">
-              ✓ Your Best XI is valid and ready.
+              <span className="material-symbols-outlined" style={{ fontSize: "18px", marginRight: "6px" }}>check_circle</span>
+              Your Best XI is valid and ready.
             </div>
 
           )}
@@ -1289,7 +1290,7 @@ function BestXI({
             <div>
 
               <p className="best-xi-label">
-                FINAL BEST XI
+                Final Best XI
               </p>
 
               <h3>
@@ -1316,7 +1317,7 @@ function BestXI({
 
 
             <div className="submitted-check">
-              ✓
+              <span className="material-symbols-outlined">check_circle</span>
             </div>
 
           </div>

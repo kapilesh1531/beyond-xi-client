@@ -3364,8 +3364,8 @@ function AdminDashboard({
                                     }
                                   />
                                 ) : (
-                                  <span>
-                                    ⚽
+                                  <span className="material-symbols-outlined">
+                                    sports_soccer
                                   </span>
                                 )}
 
@@ -3659,161 +3659,100 @@ function AdminDashboard({
       ===================================================== */}
 
       <aside className="admin-sidebar">
-
         <div className="admin-logo">
-
-          <span>
-            BEYOND
-          </span>{" "}
-          XI
-
-          <small>
-            ADMIN CONTROL
-          </small>
-
+          <span><span className="material-symbols-outlined" style={{ fontSize: "20px", verticalAlign: "middle", marginRight: "6px" }}>sports_soccer</span>Beyond</span> XI
+          <small>Admin Control</small>
         </div>
 
         <nav>
-
           <button
             className={`nav-item ${
-              activeSection ===
-              "dashboard"
-                ? "active"
-                : ""
+              activeSection === "dashboard" ? "active" : ""
             }`}
-            onClick={() =>
-              setActiveSection(
-                "dashboard"
-              )
-            }
+            onClick={() => setActiveSection("dashboard")}
           >
+            <span className="material-symbols-outlined">dashboard</span>
             Dashboard
           </button>
 
           <button
             className={`nav-item ${
-              activeSection ===
-              "teams"
-                ? "active"
-                : ""
+              activeSection === "teams" ? "active" : ""
             }`}
-            onClick={() =>
-              setActiveSection(
-                "teams"
-              )
-            }
+            onClick={() => setActiveSection("teams")}
           >
+            <span className="material-symbols-outlined">shield</span>
             Teams
           </button>
 
           <button
             className={`nav-item ${
-              activeSection ===
-              "clubs"
-                ? "active"
-                : ""
+              activeSection === "clubs" ? "active" : ""
             }`}
-            onClick={() =>
-              setActiveSection(
-                "clubs"
-              )
-            }
+            onClick={() => setActiveSection("clubs")}
           >
+            <span className="material-symbols-outlined">flag</span>
             Clubs
           </button>
 
           <button
             className={`nav-item ${
-              activeSection ===
-              "players"
-                ? "active"
-                : ""
+              activeSection === "players" ? "active" : ""
             }`}
-            onClick={() =>
-              setActiveSection(
-                "players"
-              )
-            }
+            onClick={() => setActiveSection("players")}
           >
+            <span className="material-symbols-outlined">person</span>
             Players
           </button>
 
           <button
             className={`nav-item ${
-              activeSection ===
-              "auction"
-                ? "active"
-                : ""
+              activeSection === "auction" ? "active" : ""
             }`}
-            onClick={() =>
-              setActiveSection(
-                "auction"
-              )
-            }
+            onClick={() => setActiveSection("auction")}
           >
+            <span className="material-symbols-outlined">gavel</span>
             Live Auction
           </button>
 
           <button
             className={`nav-item ${
-              activeSection ===
-              "squads"
-                ? "active"
-                : ""
+              activeSection === "squads" ? "active" : ""
             }`}
-            onClick={() =>
-              setActiveSection(
-                "squads"
-              )
-            }
+            onClick={() => setActiveSection("squads")}
           >
+            <span className="material-symbols-outlined">groups</span>
             Squads
           </button>
 
           <button
             className={`nav-item ${
-              activeSection ===
-              "results"
-                ? "active"
-                : ""
+              activeSection === "results" ? "active" : ""
             }`}
-            onClick={() =>
-              setActiveSection(
-                "results"
-              )
-            }
+            onClick={() => setActiveSection("results")}
           >
+            <span className="material-symbols-outlined">emoji_events</span>
             Results
           </button>
 
           <button
             className={`nav-item ${
-              activeSection ===
-              "settings"
-                ? "active"
-                : ""
+              activeSection === "settings" ? "active" : ""
             }`}
-            onClick={() =>
-              setActiveSection(
-                "settings"
-              )
-            }
+            onClick={() => setActiveSection("settings")}
           >
+            <span className="material-symbols-outlined">settings</span>
             Settings
           </button>
-
         </nav>
 
         <button
           className="logout-button"
-          onClick={
-            onLogout
-          }
+          onClick={onLogout}
         >
+          <span className="material-symbols-outlined">logout</span>
           Logout
         </button>
-
       </aside>
 
       {/* =====================================================

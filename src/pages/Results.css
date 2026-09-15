@@ -1,9 +1,5 @@
-@import url(
-  "https://fonts.googleapis.com/css2?family=Rajdhani:wght@400;500;600;700&display=swap"
-);
-
 /* =========================================================
-   RESULTS PAGE
+   RESULTS PAGE — SCANDINAVIAN REFINEMENT
 ========================================================= */
 
 .results-page {
@@ -14,7 +10,8 @@
   box-sizing: border-box;
 
   font-family:
-    "Rajdhani",
+    "Inter",
+    system-ui,
     sans-serif;
 
   color: #edf4ef;

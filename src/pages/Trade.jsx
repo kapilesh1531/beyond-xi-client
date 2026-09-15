@@ -1402,7 +1402,8 @@ function Trade({ teamId }) {
                 <div className="trade-insufficient">
 
                   <strong>
-                    ⚠ Insufficient purse
+                    <span className="material-symbols-outlined" style={{ fontSize: "16px", marginRight: "4px" }}>warning</span>
+                    Insufficient purse
                   </strong>
 
                   <span>
@@ -1450,12 +1451,9 @@ function Trade({ teamId }) {
         <section className="trade-closed-card">
 
           <div className="trade-closed-icon">
-
-            {tradeStatus.status ===
-            "Ended"
-              ? "✓"
-              : "🔒"}
-
+            <span className="material-symbols-outlined" style={{ fontSize: "48px" }}>
+              {tradeStatus.status === "Ended" ? "check_circle" : "lock"}
+            </span>
           </div>
 
           <h2>

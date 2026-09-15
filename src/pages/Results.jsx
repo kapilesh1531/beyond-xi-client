@@ -101,11 +101,11 @@ function Results() {
       <div className="results-page">
         <div className="results-loading">
           <div className="results-spinner">
-            ⚽
+            <span className="material-symbols-outlined" style={{ fontSize: "36px" }}>sports_soccer</span>
           </div>
 
           <p>
-            CALCULATING FINAL RESULTS...
+            Calculating Final Results...
           </p>
         </div>
       </div>
@@ -321,8 +321,8 @@ function Results() {
                 <div className="result-rank">
                   {result.rank ===
                   1 ? (
-                    <span className="gold-trophy">
-                      🏆
+                    <span className="material-symbols-outlined gold-trophy" style={{ fontSize: "24px", color: "#facc15" }}>
+                      emoji_events
                     </span>
                   ) : result.rank ? (
                     <span>
@@ -719,8 +719,8 @@ function Results() {
                               }
                             />
                           ) : (
-                            <span>
-                              ⚽
+                            <span className="material-symbols-outlined">
+                              sports_soccer
                             </span>
                           )}
 

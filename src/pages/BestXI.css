@@ -1,10 +1,7 @@
 /* =========================================================
    BEYOND XI - BEST XI
-   FOOTBALL STADIUM + GLASS CARD DESIGN
+   SCANDINAVIAN REFINEMENT
 ========================================================= */
-
-@import url("https://fonts.googleapis.com/css2?family=Rajdhani:wght@400;500;600;700&display=swap");
-
 
 /* =========================================================
    MAIN PAGE
@@ -33,7 +30,8 @@
   color: #eef4ef;
 
   font-family:
-    "Rajdhani",
+    "Inter",
+    system-ui,
     sans-serif;
 }
 

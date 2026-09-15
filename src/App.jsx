@@ -436,395 +436,221 @@ function App() {
      TEAM PORTAL
   ========================================================= */
 
-  if (
-    teamLoggedIn
-  ) {
+  if (teamLoggedIn) {
     return (
       <div className="team-portal">
-
         {/* ===================================================
             TOP NAVIGATION
         =================================================== */}
-
         <header className="team-portal-nav">
-
           <div className="team-portal-brand">
-
             <strong>
-              BEYOND XI
+              <span className="material-symbols-outlined">sports_soccer</span>
+              Beyond XI
             </strong>
-
-            <span>
-              TEAM PORTAL
-            </span>
-
+            <span>Team Portal</span>
           </div>
 
-
           <nav className="team-portal-menu">
-
             <button
               type="button"
-              className={
-                teamPage ===
-                "dashboard"
-                  ? "active"
-                  : ""
-              }
-              onClick={() =>
-                setTeamPage(
-                  "dashboard"
-                )
-              }
+              className={teamPage === "dashboard" ? "active" : ""}
+              onClick={() => setTeamPage("dashboard")}
             >
+              <span className="material-symbols-outlined">dashboard</span>
               Dashboard
             </button>
 
-
             <button
               type="button"
-              className={
-                teamPage ===
-                "best-xi"
-                  ? "active"
-                  : ""
-              }
-              onClick={() =>
-                setTeamPage(
-                  "best-xi"
-                )
-              }
+              className={teamPage === "best-xi" ? "active" : ""}
+              onClick={() => setTeamPage("best-xi")}
             >
+              <span className="material-symbols-outlined">groups</span>
               Best XI
             </button>
 
-
             <button
               type="button"
-              className={
-                teamPage ===
-                "trade"
-                  ? "active"
-                  : ""
-              }
-              onClick={() =>
-                setTeamPage(
-                  "trade"
-                )
-              }
+              className={teamPage === "trade" ? "active" : ""}
+              onClick={() => setTeamPage("trade")}
             >
+              <span className="material-symbols-outlined">swap_horiz</span>
               Trade
             </button>
-
           </nav>
-
         </header>
-
 
         {/* ===================================================
             PAGE CONTENT
         =================================================== */}
-
         <main className="team-portal-content">
-
-          {teamPage ===
-            "dashboard" && (
+          {teamPage === "dashboard" && (
             <TeamDashboard
-              teamId={
-                loggedInTeamId
-              }
-              onLogout={
-                handleTeamLogout
-              }
+              teamId={loggedInTeamId}
+              onLogout={handleTeamLogout}
             />
           )}
 
-
-          {teamPage ===
-            "best-xi" && (
+          {teamPage === "best-xi" && (
             <BestXI
-              teamId={
-                loggedInTeamId
-              }
+              teamId={loggedInTeamId}
             />
           )}
 
-
-          {teamPage ===
-            "trade" && (
+          {teamPage === "trade" && (
             <Trade
-              teamId={
-                loggedInTeamId
-              }
+              teamId={loggedInTeamId}
             />
           )}
-
         </main>
-
       </div>
     );
   }
-
 
   /* =========================================================
      ADMIN LOGIN
   ========================================================= */
 
-  if (
-    loginType ===
-    "admin"
-  ) {
+  if (loginType === "admin") {
     return (
       <div className="login-page">
-
         <div className="login-overlay">
-
           <div className="login-card">
-
-            <h2>
-              Admin Login
-            </h2>
-
+            <h2>Admin Login</h2>
             <p className="login-subtitle">
-              Access the auction
-              control panel
+              Access the auction control panel
             </p>
-
 
             <input
               type="text"
               placeholder="Admin Username"
-              value={
-                adminUsername
-              }
-              onChange={(event) =>
-                setAdminUsername(
-                  event.target.value
-                )
-              }
+              value={adminUsername}
+              onChange={(event) => setAdminUsername(event.target.value)}
               autoFocus
-              disabled={
-                adminLoading
-              }
+              disabled={adminLoading}
             />
-
 
             <input
               type="password"
               placeholder="Password"
-              value={
-                adminPassword
-              }
-              onChange={(event) =>
-                setAdminPassword(
-                  event.target.value
-                )
-              }
+              value={adminPassword}
+              onChange={(event) => setAdminPassword(event.target.value)}
               onKeyDown={(event) => {
-                if (
-                  event.key ===
-                  "Enter" &&
-                  !adminLoading
-                ) {
+                if (event.key === "Enter" && !adminLoading) {
                   handleAdminLogin();
                 }
               }}
-              disabled={
-                adminLoading
-              }
+              disabled={adminLoading}
             />
-
 
             {adminError && (
               <p className="login-error">
+                <span className="material-symbols-outlined" style={{ fontSize: "16px" }}>warning</span>
                 {adminError}
               </p>
             )}
 
-
             <button
               type="button"
               className="primary-button"
-              onClick={
-                handleAdminLogin
-              }
-              disabled={
-                adminLoading
-              }
+              onClick={handleAdminLogin}
+              disabled={adminLoading}
             >
-              {
-                adminLoading
-                  ? "LOGGING IN..."
-                  : "LOGIN"
-              }
+              {adminLoading ? "Logging in..." : "Login"}
             </button>
-
 
             <button
               type="button"
               className="back-button"
               onClick={() => {
-                setLoginType(
-                  null
-                );
-
-                setAdminUsername(
-                  ""
-                );
-
-                setAdminPassword(
-                  ""
-                );
-
-                setAdminError(
-                  ""
-                );
+                setLoginType(null);
+                setAdminUsername("");
+                setAdminPassword("");
+                setAdminError("");
               }}
-              disabled={
-                adminLoading
-              }
+              disabled={adminLoading}
             >
-              ← Back
+              <span className="material-symbols-outlined">arrow_back</span>
+              Back
             </button>
-
           </div>
-
         </div>
-
       </div>
     );
   }
-
 
   /* =========================================================
      TEAM LOGIN
   ========================================================= */
 
-  if (
-    loginType ===
-    "team"
-  ) {
+  if (loginType === "team") {
     return (
       <div className="login-page">
-
         <div className="login-overlay">
-
           <div className="login-card">
-
-            <h2>
-              Team Login
-            </h2>
-
+            <h2>Team Login</h2>
             <p className="login-subtitle">
-              Enter your team
-              credentials
+              Enter your team credentials
             </p>
-
 
             <input
               type="text"
               placeholder="Team Username"
-              value={
-                teamUsername
-              }
-              onChange={(event) =>
-                setTeamUsername(
-                  event.target.value
-                )
-              }
+              value={teamUsername}
+              onChange={(event) => setTeamUsername(event.target.value)}
               autoFocus
-              disabled={
-                teamLoading
-              }
+              disabled={teamLoading}
             />
-
 
             <input
               type="password"
               placeholder="Password"
-              value={
-                teamPassword
-              }
-              onChange={(event) =>
-                setTeamPassword(
-                  event.target.value
-                )
-              }
+              value={teamPassword}
+              onChange={(event) => setTeamPassword(event.target.value)}
               onKeyDown={(event) => {
-                if (
-                  event.key ===
-                  "Enter" &&
-                  !teamLoading
-                ) {
+                if (event.key === "Enter" && !teamLoading) {
                   handleTeamLogin();
                 }
               }}
-              disabled={
-                teamLoading
-              }
+              disabled={teamLoading}
             />
-
 
             {teamError && (
               <p className="login-error">
+                <span className="material-symbols-outlined" style={{ fontSize: "16px" }}>warning</span>
                 {teamError}
               </p>
             )}
 
-
             <button
               type="button"
               className="primary-button"
-              onClick={
-                handleTeamLogin
-              }
-              disabled={
-                teamLoading
-              }
+              onClick={handleTeamLogin}
+              disabled={teamLoading}
             >
-              {
-                teamLoading
-                  ? "LOGGING IN..."
-                  : "LOGIN"
-              }
+              {teamLoading ? "Logging in..." : "Login"}
             </button>
-
 
             <button
               type="button"
               className="back-button"
               onClick={() => {
-                setLoginType(
-                  null
-                );
-
-                setTeamUsername(
-                  ""
-                );
-
-                setTeamPassword(
-                  ""
-                );
-
-                setTeamError(
-                  ""
-                );
+                setLoginType(null);
+                setTeamUsername("");
+                setTeamPassword("");
+                setTeamError("");
               }}
-              disabled={
-                teamLoading
-              }
+              disabled={teamLoading}
             >
-              ← Back
+              <span className="material-symbols-outlined">arrow_back</span>
+              Back
             </button>
-
           </div>
-
         </div>
-
       </div>
     );
   }
-
 
   /* =========================================================
      MAIN LOGIN
@@ -832,155 +658,99 @@ function App() {
 
   return (
     <div className="login-page">
-
       <div className="login-overlay">
-
         {/* ===================================================
             BRAND
         =================================================== */}
-
         <div className="brand">
-
           <div className="brand-small">
-            THE ULTIMATE
+            The Ultimate
           </div>
-
           <h1>
-            BEYOND{" "}
-            <span>
-              XI
-            </span>
+            Beyond <span>XI</span>
           </h1>
-
           <p>
-            FIFA FOOTBALL AUCTION
+            FIFA Football Auction
           </p>
-
         </div>
-
 
         {/* ===================================================
             LOGIN CARD
         =================================================== */}
-
         <div className="login-card">
-
-          <h2>
-            Welcome
-          </h2>
-
+          <h2>Welcome</h2>
           <p className="login-subtitle">
-            Enter the auction
-            arena
+            Enter the auction arena
           </p>
 
-
           <div className="login-options">
-
             {/* =================================================
                 PRESENTATION
             ================================================= */}
-
             <button
               type="button"
               className="login-option presentation"
               onClick={() => {
-                setLoginType(
-                  "presentation"
-                );
+                setLoginType("presentation");
               }}
             >
+              <div className="login-option-icon">
+                <span className="material-symbols-outlined">visibility</span>
+              </div>
               <div>
-
-                <strong>
-                  Presentation
-                </strong>
-
-                <small>
-                  Display the live auction
-                </small>
-
+                <strong>Presentation</strong>
+                <small>Display the live auction</small>
               </div>
             </button>
-
 
             {/* =================================================
                 TEAM
             ================================================= */}
-
             <button
               type="button"
               className="login-option team"
               onClick={() => {
-                setLoginType(
-                  "team"
-                );
-
-                setTeamError(
-                  ""
-                );
+                setLoginType("team");
+                setTeamError("");
               }}
             >
+              <div className="login-option-icon">
+                <span className="material-symbols-outlined">shield</span>
+              </div>
               <div>
-
-                <strong>
-                  Team Login
-                </strong>
-
-                <small>
-                  Enter your team's
-                  auction portal
-                </small>
-
+                <strong>Team Login</strong>
+                <small>Enter your team's auction portal</small>
               </div>
             </button>
-
 
             {/* =================================================
                 ADMIN
             ================================================= */}
-
             <button
               type="button"
               className="login-option admin"
               onClick={() => {
-                setLoginType(
-                  "admin"
-                );
-
-                setAdminError(
-                  ""
-                );
+                setLoginType("admin");
+                setAdminError("");
               }}
             >
+              <div className="login-option-icon">
+                <span className="material-symbols-outlined">admin_panel_settings</span>
+              </div>
               <div>
-
-                <strong>
-                  Admin Login
-                </strong>
-
-                <small>
-                  Manage and control
-                  the auction
-                </small>
-
+                <strong>Admin Login</strong>
+                <small>Manage and control the auction</small>
               </div>
             </button>
-
           </div>
-
         </div>
-
 
         {/* ===================================================
             FOOTER
         =================================================== */}
-
         <div className="footer-text">
-          BEYOND XI • FIFA
-          FOOTBALL AUCTION
+          Beyond XI • FIFA Football Auction
         </div>
-
       </div>
 
     </div>

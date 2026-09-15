@@ -4373,13 +4373,10 @@
   }
 }
 /* =========================================================
-   BEYOND XI - BOLD FOOTBALL TYPOGRAPHY
+   BEYOND XI - SCANDINAVIAN TYPOGRAPHY
 ========================================================= */
 
-@import url('https://fonts.googleapis.com/css2?family=Rajdhani:wght@400;500;600;700&display=swap');
-
-
-/* Apply new font everywhere in Admin Dashboard */
+/* Apply Inter font everywhere in Admin Dashboard */
 .admin-dashboard,
 .admin-dashboard button,
 .admin-dashboard input,
@@ -4388,7 +4385,7 @@
 .admin-dashboard table,
 .admin-dashboard th,
 .admin-dashboard td {
-  font-family: "Rajdhani", sans-serif !important;
+  font-family: "Inter", system-ui, sans-serif !important;
 }
 
 

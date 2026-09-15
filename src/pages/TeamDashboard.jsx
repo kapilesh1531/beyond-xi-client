@@ -726,7 +726,7 @@ function TeamDashboard({
           <div className="empty-team-squad">
 
             <div className="empty-squad-icon">
-              ⚽
+              <span className="material-symbols-outlined" style={{ fontSize: "44px" }}>sports_soccer</span>
             </div>
 
             <h3>
@@ -774,7 +774,7 @@ function TeamDashboard({
                     ) : (
 
                       <div className="squad-placeholder-image">
-                        ⚽
+                        <span className="material-symbols-outlined">sports_soccer</span>
                       </div>
 
                     )}

@@ -874,7 +874,7 @@ function LiveAuction() {
         <div className="auction-empty">
 
           <div className="auction-empty-icon">
-            ✓
+            <span className="material-symbols-outlined" style={{ fontSize: "48px" }}>check_circle</span>
           </div>
 
           <h2>
@@ -1195,7 +1195,7 @@ function LiveAuction() {
         <div className="auction-empty">
 
           <div className="auction-empty-icon">
-            ⚽
+            <span className="material-symbols-outlined" style={{ fontSize: "48px" }}>sports_soccer</span>
           </div>
 
           <h2>
