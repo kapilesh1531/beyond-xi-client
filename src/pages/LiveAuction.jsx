@@ -370,7 +370,7 @@ function LiveAuction() {
 
     const price =
       Number(
-        finalBid
+        String(finalBid).replace(/,/g, "")
       );
 
     if (
@@ -1079,21 +1079,23 @@ function LiveAuction() {
                 </span>
 
                 <input
-                  type="number"
-                  min={
-                    basePrice
-                  }
-                  step="100000"
+                  type="text"
+                  inputMode="numeric"
                   value={
                     finalBid
                   }
-                  placeholder="Enter final amount"
+                  placeholder="e.g. 10,000,000"
                   onChange={(event) => {
                     clearMessages();
 
-                    setFinalBid(
-                      event.target.value
-                    );
+                    const raw = event.target.value.replace(/[^0-9]/g, "");
+                    if (!raw) {
+                      setFinalBid("");
+                      return;
+                    }
+
+                    const formatted = Number(raw).toLocaleString("en-US");
+                    setFinalBid(formatted);
                   }}
                   disabled={
                     actionLoading ||
