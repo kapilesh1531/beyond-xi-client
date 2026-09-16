@@ -519,6 +519,23 @@ function Results() {
               </small>
             </div>
 
+            {/* Rule Failures / Disqualification reasons */}
+            {selectedResult.ruleFailures && selectedResult.ruleFailures.length > 0 && (
+              <div className="details-failures-card">
+                <div className="details-failures-title">
+                  <span className="material-symbols-outlined" style={{ fontSize: "18px", color: "#f87171" }}>
+                    warning
+                  </span>
+                  <strong>DISQUALIFICATION REASONS</strong>
+                </div>
+                <ul className="details-failures-list">
+                  {selectedResult.ruleFailures.map((failure, fIdx) => (
+                    <li key={fIdx}>{failure}</li>
+                  ))}
+                </ul>
+              </div>
+            )}
+
             {/* Criteria */}
 
             <div className="details-criteria">
