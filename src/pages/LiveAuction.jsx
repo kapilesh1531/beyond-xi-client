@@ -1257,18 +1257,6 @@ function LiveAuction() {
               NEXT PLAYER
             </button>
 
-            <button
-              className="end-auction-button"
-              onClick={
-                endAuction
-              }
-              disabled={
-                actionLoading
-              }
-            >
-              END AUCTION
-            </button>
-
             <div className="auction-position">
 
               <span>
