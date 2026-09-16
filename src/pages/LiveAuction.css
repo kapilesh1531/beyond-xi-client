@@ -133,6 +133,7 @@
 
 .auction-primary-button,
 .auction-secondary-button,
+.auction-danger-button,
 .start-again-button {
   min-height: 46px;
   padding: 0 22px;
@@ -144,7 +145,8 @@
   transition:
     transform 0.15s ease,
     opacity 0.15s ease,
-    border-color 0.15s ease;
+    border-color 0.15s ease,
+    background-color 0.15s ease;
 }
 
 .auction-primary-button,
@@ -160,14 +162,28 @@
   color: #b7c4bc;
 }
 
+.auction-danger-button {
+  border: 1px solid #7a2b2b;
+  background: #2b1212;
+  color: #ff8585;
+}
+
 .auction-primary-button:hover,
 .auction-secondary-button:hover,
 .start-again-button:hover {
   transform: translateY(-1px);
 }
 
+.auction-danger-button:hover {
+  background: #3d1717;
+  border-color: #993535;
+  color: #ffa3a3;
+  transform: translateY(-1px);
+}
+
 .auction-primary-button:disabled,
 .auction-secondary-button:disabled,
+.auction-danger-button:disabled,
 .start-again-button:disabled {
   opacity: 0.45;
   cursor: not-allowed;
@@ -181,6 +197,7 @@
 .auction-control-bar {
   display: flex;
   justify-content: flex-end;
+  gap: 12px;
   margin-bottom: 18px;
 }
 
@@ -515,9 +532,24 @@
   transform: translateY(-1px);
 }
 
+.end-auction-button {
+  border: 1px solid #6b2626;
+  background: #241010;
+  color: #ff9191;
+  font-weight: 800;
+}
+
+.end-auction-button:hover {
+  background: #361414;
+  border-color: #8c3232;
+  color: #ffaaaa;
+  transform: translateY(-1px);
+}
+
 .sell-button:disabled,
 .unsold-button:disabled,
-.next-player-button:disabled {
+.next-player-button:disabled,
+.end-auction-button:disabled {
   opacity: 0.4;
   cursor: not-allowed;
   transform: none;

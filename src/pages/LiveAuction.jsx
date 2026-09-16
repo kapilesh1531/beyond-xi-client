@@ -354,6 +354,73 @@ function LiveAuction() {
   };
 
   /* =========================================================
+     END AUCTION MANUALLY
+  ========================================================= */
+
+  const endAuction = async () => {
+    clearMessages();
+
+    const confirmed = window.confirm(
+      "Are you sure you want to END the auction now? All teams that do not satisfy the squad rules will be directly eliminated."
+    );
+
+    if (!confirmed) {
+      return;
+    }
+
+    setActionLoading(true);
+
+    try {
+      const response =
+        await fetch(
+          `${API_URL}/api/auction/end`,
+          {
+            method:
+              "POST"
+          }
+        );
+
+      const data =
+        await response.json();
+
+      if (!response.ok) {
+        setError(
+          data.message ||
+            "Failed to end auction."
+        );
+
+        return;
+      }
+
+      setAuction(
+        data.auction ||
+          data
+      );
+
+      setSelectedTeamId("");
+      setFinalBid("");
+
+      setMessage(
+        data.message ||
+          "Auction ended successfully."
+      );
+
+      await fetchTeams();
+    } catch (err) {
+      console.error(
+        "End auction error:",
+        err
+      );
+
+      setError(
+        "Unable to connect to the server."
+      );
+    } finally {
+      setActionLoading(false);
+    }
+  };
+
+  /* =========================================================
      RECORD SOLD
   ========================================================= */
 
@@ -822,12 +889,11 @@ function LiveAuction() {
       )}
 
       {/* =====================================================
-          PAUSE
+          PAUSE / RESUME / END
       ===================================================== */}
 
       {isLive && (
         <div className="auction-control-bar">
-
           <button
             className="auction-secondary-button"
             onClick={
@@ -840,6 +906,17 @@ function LiveAuction() {
             PAUSE AUCTION
           </button>
 
+          <button
+            className="auction-danger-button"
+            onClick={
+              endAuction
+            }
+            disabled={
+              actionLoading
+            }
+          >
+            END AUCTION
+          </button>
         </div>
       )}
 
@@ -849,7 +926,6 @@ function LiveAuction() {
 
       {isPaused && (
         <div className="auction-control-bar">
-
           <button
             className="auction-primary-button"
             onClick={
@@ -862,6 +938,17 @@ function LiveAuction() {
             RESUME AUCTION
           </button>
 
+          <button
+            className="auction-danger-button"
+            onClick={
+              endAuction
+            }
+            disabled={
+              actionLoading
+            }
+          >
+            END AUCTION
+          </button>
         </div>
       )}
 
@@ -1168,6 +1255,18 @@ function LiveAuction() {
               }
             >
               NEXT PLAYER
+            </button>
+
+            <button
+              className="end-auction-button"
+              onClick={
+                endAuction
+              }
+              disabled={
+                actionLoading
+              }
+            >
+              END AUCTION
             </button>
 
             <div className="auction-position">
