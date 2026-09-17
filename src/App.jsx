@@ -1,7 +1,8 @@
 import {
   useState
 } from "react";
-const API_URL = import.meta.env.VITE_API_URL;
+const API_URL = import.meta.env.VITE_API_URL || "https://beyond-xi-server-production.up.railway.app";
+
 import "./index.css";
 
 import AdminDashboard
@@ -18,6 +19,9 @@ import Trade
 
 import Presentation
   from "./pages/Presentation";
+
+import Results
+  from "./pages/Results.jsx";
 
 
 function App() {
@@ -478,6 +482,16 @@ function App() {
               <span className="material-symbols-outlined">swap_horiz</span>
               Trade
             </button>
+
+            {/* Add Results Tab */}
+            <button
+              type="button"
+              className={teamPage === "results" ? "active" : ""}
+              onClick={() => setTeamPage("results")}
+            >
+              <span className="material-symbols-outlined">emoji_events</span>
+              Results
+            </button>
           </nav>
         </header>
 
@@ -502,6 +516,10 @@ function App() {
             <Trade
               teamId={loggedInTeamId}
             />
+          )}
+          {/* Render Results Page */}
+          {teamPage === "results" && (
+            <Results />
           )}
         </main>
       </div>

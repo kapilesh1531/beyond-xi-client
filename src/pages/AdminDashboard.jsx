@@ -3,11 +3,12 @@ import {
   useRef,
   useState
 } from "react";
-const API_URL = import.meta.env.VITE_API_URL;
+const API_URL = import.meta.env.VITE_API_URL || "https://beyond-xi-server-production.up.railway.app";
 
 import { io } from "socket.io-client";
 
 import LiveAuction from "./LiveAuction";
+import Results from "./Results";
 
 import "./AdminDashboard.css";
 
@@ -3810,10 +3811,7 @@ function AdminDashboard({
               Results
             </h1>
 
-            <p>
-              Auction results will
-              appear here.
-            </p>
+            <Results />
 
           </section>
         )}

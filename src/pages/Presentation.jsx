@@ -3,7 +3,7 @@ import {
   useState
 } from "react";
 
-const API_URL = import.meta.env.VITE_API_URL;
+const API_URL = import.meta.env.VITE_API_URL || "https://beyond-xi-server-production.up.railway.app";;
 
 import {
   io
