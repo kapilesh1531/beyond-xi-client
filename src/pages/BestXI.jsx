@@ -378,7 +378,18 @@ function BestXI({
         selectedPlayers
       ]
     );
+  /* =========================================================
+      PRUNE TRADED-OUT PLAYERS FROM SELECTION
+    ========================================================= */
 
+    useEffect(() => {
+      if (squad.length > 0 && selectedPlayers.length > 0) {
+        const validSquadIds = new Set(squad.map((p) => String(p._id)));
+        setSelectedPlayers((prev) =>
+          prev.filter((id) => validSquadIds.has(String(id)))
+        );
+      }
+    }, [squad]);
 
   /* =========================================================
      POSITION COUNTS
