@@ -191,10 +191,11 @@ function BestXI({
         );
       }
 
-      setTeam(
-        data.team ||
-        null
-      );
+      setTeam({
+        _id: data.teamId,
+        club: data.club,
+        bestXI: data.bestXI
+      });
 
       setSquad(
         Array.isArray(
@@ -774,8 +775,15 @@ function BestXI({
           );
         }
 
-        setSubmitted(
-          true
+        setSubmitted(true);
+
+        setTeam((prev) => ({
+          ...prev,
+          bestXI: data.bestXI || { submitted: true }
+        }));
+        setSubmittedAt(
+          data.bestXI?.submittedAt ||
+          new Date()
         );
 
         setSubmittedAt(
