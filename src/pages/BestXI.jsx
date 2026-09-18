@@ -468,7 +468,8 @@ function BestXI({
   const finalSubmissionAvailable =
     tradeStatus === "Ended" &&
     ready &&
-    !submitted;
+    !submitted &&
+    !team?.bestXI?.submitted;
 
 
   /* =========================================================
@@ -1294,7 +1295,7 @@ function BestXI({
 
       <section className="best-xi-submit-section">
 
-        {submitted ? (
+        {submitted || team?.bestXI?.submitted ? (
 
           <div className="submitted-panel">
 
@@ -1396,6 +1397,8 @@ function BestXI({
                 }
                 disabled={
                   saving ||
+                  submitted ||
+                  Boolean(team?.bestXI?.submitted) ||
                   !finalSubmissionAvailable
                 }
               >
